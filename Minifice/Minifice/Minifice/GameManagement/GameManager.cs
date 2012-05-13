@@ -81,7 +81,7 @@ namespace Minifice.GameManagement
             this.difficulty = difficulty;
             this.screenManager = screenManager;
             camera.Pos = new Vector2(200f, 200f);
-            camera.Zoom = 4f;
+            camera.Zoom = 1.4f;
             GameMap = new GameMap(10,20);
 
             content = screenManager.Game.Content;
