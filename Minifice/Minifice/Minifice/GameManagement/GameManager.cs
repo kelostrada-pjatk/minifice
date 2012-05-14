@@ -27,6 +27,8 @@ namespace Minifice.GameManagement
         ScreenManager screenManager;
         public GameMap GameMap;
         [XmlIgnore]
+        public GameInterface GameInterface;
+        [XmlIgnore]
         public List<Fighter> Fighters;
         public List<Enemy> Enemies;
         [XmlIgnore]
@@ -72,28 +74,30 @@ namespace Minifice.GameManagement
 
         public GameManager()
         {
-            camera.Pos = new Vector2(150f, 150f);
-            camera.Zoom = 4f;
+            camera.Pos = new Vector2(0f, 0f);
+            camera.Zoom = 1.2f;
         }
 
-        public GameManager(Difficulty difficulty,ScreenManager screenManager)
+        public GameManager(Difficulty difficulty,ScreenManager screenManager) : this()
         {
             this.difficulty = difficulty;
             this.screenManager = screenManager;
-            camera.Pos = new Vector2(200f, 200f);
-            camera.Zoom = 1.4f;
-            GameMap = new GameMap(10,20);
 
+            int tileCount = 50;
+            camera.Zoom = screenManager.Settings.Resolution.Y / tileCount / GameMap.TileShift.Y * 2;
+            
+            GameMap = new GameMap(10,20);
+            
             content = screenManager.Game.Content;
 
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 20; j++)
-                {
                     GameMap.mapTiles[i][j] = new MapTile(new BackgroundSprite(@"Game\texture", new Rectangle(152, 379, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
-                    GameMap.mapTiles[i][j].Load(content);
-                }
 
+            GameMap.Load(content);
 
+            GameInterface = new GameInterface();
+            GameInterface.Load(content);
 
             Fighters = new List<Fighter>();
             Enemies = new List<Enemy>();
@@ -101,8 +105,12 @@ namespace Minifice.GameManagement
             Missiles = new List<Weapon>();
             weaponsArsenal = new Dictionary<Weapon,int>();
 
-            FileManager fileManager = new FileManager();
-            fileManager.Serialize<GameManager>(@"mission1", this);
+            //FileManager fileManager = new FileManager();
+            //fileManager.Serialize<GameManager>(@"mission1", this);
+
+            Fighter a = new Fighter(true);
+            a.Load(content);
+
 
         }
 
@@ -132,6 +140,9 @@ namespace Minifice.GameManagement
             newInstance.screenManager = screenManager;
             newInstance.MissionId = 1;
             newInstance.content = content;
+
+            newInstance.GameInterface = new GameInterface();
+            newInstance.GameInterface.Load(content);
 
             return newInstance;
         }
@@ -176,7 +187,6 @@ namespace Minifice.GameManagement
 
             //spriteBatch.Begin();
 
-            Texture2D texture = content.Load<Texture2D>(@"Game\texture");
             //SpriteFont spriteFont = content.Load<SpriteFont>(@"Menu\menufont");
             //spriteBatch.DrawString(spriteFont, "TESTTESTTEST", new Vector2(100, 100), Color.White);
             //spriteBatch.Draw(texture, new Rectangle(100,100,1000,1000), Color.White);
@@ -191,7 +201,13 @@ namespace Minifice.GameManagement
             foreach (Weapon w in Missiles)
                 w.Draw(gameTime, spriteBatch);
 
-            // TODO - rysuj interfejs po lewej stronie
+            spriteBatch.End();
+
+
+            // Inicjuje nowego spriteBatcha, żeby interfejs nie przesuwal sie z kamerą
+            spriteBatch.Begin();
+
+            GameInterface.Draw(spriteBatch);
 
             spriteBatch.End();
 
