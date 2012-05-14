@@ -11,12 +11,12 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Minifice.GameManagement
 {
-    public class Sprite
+    public abstract class Sprite
     {
         #region Pola
 
         [XmlIgnore]
-        Texture2D texture;
+        protected Texture2D texture;
         public Rectangle source;
         public string textureName;
 

@@ -116,12 +116,14 @@
     <Compile Include="GameManagement\Bonus.cs" />
     <Compile Include="GameManagement\Enemy.cs" />
     <Compile Include="GameManagement\Fighter.cs" />
+    <Compile Include="GameManagement\GameInterface.cs" />
     <Compile Include="GameManagement\GameManager.cs" />
     <Compile Include="GameManagement\GameMap.cs" />
     <Compile Include="GameManagement\MapObject.cs" />
     <Compile Include="GameManagement\MapTile.cs" />
     <Compile Include="GameManagement\Boundaries.cs" />
     <Compile Include="GameManagement\MoveStrategy.cs" />
+    <Compile Include="GameManagement\PanelSprite.cs" />
     <Compile Include="GameManagement\Sprite.cs" />
     <Compile Include="GameManagement\Unit.cs" />
     <Compile Include="GameManagement\Weapon.cs" />

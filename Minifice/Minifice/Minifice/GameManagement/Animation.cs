@@ -11,7 +11,7 @@ namespace Minifice.GameManagement
 
         internal void Load(ContentManager content)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -14,10 +14,9 @@ namespace Minifice.GameManagement
 
         }
 
-        public BackgroundSprite(string textureName, Rectangle source)
+        public BackgroundSprite(string textureName, Rectangle source): base(textureName, source)
         {
-            this.textureName = textureName;
-            this.source = source;
+
         }
     }
 }
