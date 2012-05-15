@@ -45,8 +45,8 @@ namespace Minifice.GameManagement
 
         internal void Draw(SpriteBatch spriteBatch, Vector2 point)
         {
-            float layerDepth = point.Y /(GameMap.TileShift.Y / 2) * 0.001f;
-            backgroundSprite.Draw(spriteBatch, point, layerDepth);
+            float layerDepth = point.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.001f;
+            backgroundSprite.Draw(spriteBatch, point, 0);
             foreach (MapObject mo in mapObjects)
                 mo.Draw(spriteBatch, point, layerDepth);
         }
