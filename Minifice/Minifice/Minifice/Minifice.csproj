@@ -108,10 +108,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Difficulty.cs" />
+    <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\ScreenState.cs" />
     <Compile Include="FileManagement\DataItem.cs" />
     <Compile Include="FileManagement\FileManager.cs" />
     <Compile Include="GameManagement\Animation.cs" />
+    <Compile Include="GameManagement\AnimationFrame.cs" />
     <Compile Include="GameManagement\BackgroundSprite.cs" />
     <Compile Include="GameManagement\Bonus.cs" />
     <Compile Include="GameManagement\Enemy.cs" />

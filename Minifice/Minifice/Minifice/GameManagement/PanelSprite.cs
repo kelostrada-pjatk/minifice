@@ -22,7 +22,7 @@ namespace Minifice.GameManagement
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 location, float layerDepth)
         {
-            spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, 200,
+            spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, GameInterface.Width,
             spriteBatch.GraphicsDevice.Viewport.Height), source, Color.White, 0, new Vector2(), SpriteEffects.None, layerDepth);
         }
     }

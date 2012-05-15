@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Minifice.ScreenManagement;
 using System.Xml.Serialization;
+using Minifice.Enums;
 #endregion
 
 namespace Minifice.GameManagement
@@ -37,11 +38,19 @@ namespace Minifice.GameManagement
         public Fighter(bool playerControlled)
         {
             this.playerControlled = playerControlled;
-            this.animation = new Animation();
+
+            // Definicja animacji postaci
+            this.animation = new Animation(2, 5, Direction.Left);
+            AnimationFrame mini1 = new AnimationFrame(@"Game\mini1", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            AnimationFrame mini2 = new AnimationFrame(@"Game\mini2", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            this.animation.framesLeft.Add(mini1);
+            this.animation.framesLeft.Add(mini2);
+
             this.animationDeath = new Animation();
+            
             this.health = 2;
             this.isActive = true;
-            this.position = new Vector2();
+            this.position = new Vector2(100f, 100f);
             this.speed = 1f;
             this.timeLastShot = new TimeSpan();
         }
@@ -50,7 +59,7 @@ namespace Minifice.GameManagement
 
         #region Implementacje Metod
 
-        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input, GameTime gameTime)
+        public Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
         {
             if (playerControlled)
             {
@@ -72,12 +81,17 @@ namespace Minifice.GameManagement
     Przesuń postać(wektor);
     Animuj ruch(kierunek);
                 */
-            }
-            else
-            {
-                this.moveStrategy.Move(gameTime);
-            }
+                Vector2 pos = new Vector2();
 
+                animation.Update(Direction.Left, currentTime);
+
+                return position;
+            }
+            return null;
+        }
+
+        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
+        {
 
         }
 
@@ -88,7 +102,7 @@ namespace Minifice.GameManagement
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
+            animation.Draw(spriteBatch, position, 0);
         }
 
         #endregion
