@@ -22,6 +22,7 @@ namespace Minifice.GameManagement
         public TimeSpan timeLastShot;
         public Vector2 position;
         protected GameTime currentTime;
+        protected TimeSpan timeLastMoved = new TimeSpan(0);
         #endregion
 
         #region Inicjalizacja

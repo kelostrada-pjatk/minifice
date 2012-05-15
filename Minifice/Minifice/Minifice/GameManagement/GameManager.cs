@@ -75,7 +75,7 @@ namespace Minifice.GameManagement
 
         public GameManager()
         {
-            camera.Pos = new Vector2(300f, 200f);
+            camera.Pos = new Vector2(700f, 700f);
             camera.Zoom = 1.2f;
         }
 
@@ -229,7 +229,7 @@ namespace Minifice.GameManagement
                 {
                     foreach (Fighter f in Fighters)
                     {
-                        Vector2? pos = f.Move(GameMap, Fighters, Enemies, input);
+                        Vector2? pos = f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
                         if (pos != null)
                         {
                             camera.Pos = (Vector2)pos;
@@ -255,7 +255,7 @@ namespace Minifice.GameManagement
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, camera.get_transformation(screenManager.GraphicsDevice));
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, null, null, null, null, camera.get_transformation(screenManager.GraphicsDevice));
 
             //spriteBatch.Begin();
 

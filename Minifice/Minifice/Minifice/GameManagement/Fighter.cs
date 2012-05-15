@@ -51,7 +51,7 @@ namespace Minifice.GameManagement
             this.health = 2;
             this.isActive = true;
             this.position = new Vector2(100f, 100f);
-            this.speed = 1f;
+            this.speed = 0.7f;
             this.timeLastShot = new TimeSpan();
         }
 
@@ -59,7 +59,7 @@ namespace Minifice.GameManagement
 
         #region Implementacje Metod
 
-        public Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
+        public Vector2? Move(Vector2 resolution, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
         {
             if (playerControlled)
             {
@@ -81,7 +81,18 @@ namespace Minifice.GameManagement
     Przesuń postać(wektor);
     Animuj ruch(kierunek);
                 */
-                Vector2 pos = new Vector2();
+                Vector2 posClick = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + GameInterface.Width - position.X, input.CurrentMouseState.Y - resolution.Y/2 - position.Y);
+
+                //Vector2 posClick = new Vector2((resolution.X - GameInterface.Width) / 2 + GameInterface.Width - position.X - (input.CurrentMouseState.X - GameInterface.Width), resolution.Y / 2 - position.Y - input.CurrentMouseState.Y);
+                float s = speed * (currentTime.ElapsedGameTime.Ticks) * 0.00001f;
+
+                posClick -= position;
+                posClick.Normalize();
+                posClick *= s;
+
+                Vector2 oldPosition = position;
+
+                position += posClick;
 
                 animation.Update(Direction.Left, currentTime);
 
@@ -102,7 +113,8 @@ namespace Minifice.GameManagement
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            animation.Draw(spriteBatch, position, 0);
+
+            animation.Draw(spriteBatch, position, position.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.002f);
         }
 
         #endregion
