@@ -23,7 +23,7 @@ namespace Minifice.ScreenManagement
         {
             get { return currentKeyboardState; }
         }
-        /*
+
         public KeyboardState LastKeyboardState
         {
             get { return lastKeyboardState; }
@@ -33,7 +33,6 @@ namespace Minifice.ScreenManagement
         {
             get { return currentMouseState; }
         }
-         * */
 
         public MouseState LastMouseState
         {
@@ -108,6 +107,44 @@ namespace Minifice.ScreenManagement
             Coord = new Vector2(currentMouseState.X, currentMouseState.Y);
             return (currentMouseState.X != lastMouseState.X || currentMouseState.Y != lastMouseState.Y);
         }
+
+        /// <summary>
+        /// Sprawdzanie czy lewy klawisz myszki jest przytrzymany
+        /// </summary>
+        public bool IsMouseLeftClickHold()
+        {
+            return currentMouseState.LeftButton == ButtonState.Pressed;
+        }
+
+        /// <summary>
+        /// Sprawdzanie czy lewy klawisz myszki jest przytrzymany
+        /// </summary>
+        /// <param name="Coord">zwracana pozycja myszki</param>
+        public bool IsMouseLeftClickHold(out Vector2 Coord)
+        {
+            Coord = new Vector2(currentMouseState.X, currentMouseState.Y);
+            return currentMouseState.LeftButton == ButtonState.Pressed;
+        }
+
+        /// <summary>
+        /// Sprawdzanie czy prawy klawisz myszki jest przytrzymany
+        /// </summary>
+        public bool IsMouseRightClickHold()
+        {
+            return currentMouseState.RightButton == ButtonState.Pressed;
+        }
+
+        /// <summary>
+        /// Sprawdzanie czy prawy klawisz myszki jest przytrzymany
+        /// </summary>
+        /// <param name="Coord">zwracana pozycja myszki</param>
+        public bool IsMouseRightClickHold(out Vector2 Coord)
+        {
+            Coord = new Vector2(currentMouseState.X, currentMouseState.Y);
+            return currentMouseState.RightButton == ButtonState.Pressed;
+        }
+
+
 
         /// <summary>
         /// IsMenuUp

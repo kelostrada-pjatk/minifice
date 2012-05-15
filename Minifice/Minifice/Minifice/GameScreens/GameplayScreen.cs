@@ -125,7 +125,7 @@ namespace Minifice.GameScreens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.DimGray, 0, 0);
             
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 

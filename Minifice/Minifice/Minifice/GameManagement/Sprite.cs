@@ -17,8 +17,30 @@ namespace Minifice.GameManagement
 
         [XmlIgnore]
         protected Texture2D texture;
+        [XmlElement]
         public Rectangle source;
+        [XmlAttribute]
         public string textureName;
+        [XmlElement]
+        public Vector2 origin = new Vector2();
+        [XmlElement]
+        public Rectangle destination;
+
+        #endregion
+
+        #region Właściwości
+
+        public Source Source
+        {
+            get
+            {
+                return new Source(source.X, source.Y, source.Width, source.Height);
+            }
+            set
+            {
+                source = new Rectangle(value.X, value.Y, value.Width, value.Height);
+            }
+        }
 
         #endregion
 
@@ -33,6 +55,13 @@ namespace Minifice.GameManagement
         {
             this.textureName = textureName;
             this.source = source;
+            this.destination = source;
+        }
+
+        public Sprite(string textureName, Rectangle source, Rectangle destination)
+            : this(textureName, source)
+        {
+            this.destination = destination;
         }
 
         #endregion
@@ -47,9 +76,32 @@ namespace Minifice.GameManagement
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 location, float layerDepth)
         {
             if (texture != null)
-                spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, (int)GameMap.TileShift.X+1, (int)GameMap.TileShift.Y+1), source, Color.White, 0, new Vector2(), SpriteEffects.None, layerDepth);
+                spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, destination.Width + 1, destination.Height + 1), source, Color.White, 0, origin, SpriteEffects.None, layerDepth);
         }
 
         #endregion
     }
+
+#region Klasa Pomocnicza
+    public class Source
+    {
+        public int X;
+        public int Y;
+        public int Width;
+        public int Height;
+
+        public Source()
+        {
+
+        }
+
+        public Source(int _X, int _Y, int _Width, int _Height)
+        {
+            X = _X;
+            Y = _Y;
+            Width = _Width;
+            Height = _Height;
+        }
+    }
+    #endregion
 }

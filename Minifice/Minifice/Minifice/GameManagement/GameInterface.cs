@@ -5,11 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Minifice.ScreenManagement;
 
 namespace Minifice.GameManagement
 {
     public class GameInterface
     {
+        public static int Width = 200;
+
         private PanelSprite panel;
 
         public GameInterface()
@@ -25,6 +28,11 @@ namespace Minifice.GameManagement
         public void Draw(SpriteBatch spriteBatch)
         {
             panel.Draw(spriteBatch, new Vector2(), 1f);
+        }
+
+        public void HandleInput(InputState input)
+        {
+            
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using Minifice.Enums;
 using Minifice.ScreenManagement;
 using Minifice.FileManagement;
+using Microsoft.Xna.Framework.Input;
 #endregion
 
 namespace Minifice.GameManagement
@@ -74,7 +75,7 @@ namespace Minifice.GameManagement
 
         public GameManager()
         {
-            camera.Pos = new Vector2(0f, 0f);
+            camera.Pos = new Vector2(300f, 200f);
             camera.Zoom = 1.2f;
         }
 
@@ -108,8 +109,51 @@ namespace Minifice.GameManagement
             //FileManager fileManager = new FileManager();
             //fileManager.Serialize<GameManager>(@"mission1", this);
 
+            MapObject mo = new MapObject();
+            List<Vector2> punkty = new List<Vector2>();
+            punkty.Add(new Vector2(0, 11));
+            punkty.Add(new Vector2(4, 13));
+            punkty.Add(new Vector2(8, 13));
+            punkty.Add(new Vector2(29, 2));
+            punkty.Add(new Vector2(25, 0));
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.collectible = false;
+            mo.Source = new Source(372, 429, 30, 38);
+            mo.textureName = @"Game\texture";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(0, 24);
+            mo.Load(content);
+
+            for (int i = 0; i < 10; i++)
+                GameMap.mapTiles[i][0].mapObjects.Add(mo);
+
+            mo = new MapObject();
+            punkty.Clear();
+            punkty.Add(new Vector2(40, 13));
+            punkty.Add(new Vector2(43, 13));
+            punkty.Add(new Vector2(47, 11));
+            punkty.Add(new Vector2(22, 0));
+            //punkty.Add(new Vector2(18, 2));
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.collectible = false;
+            mo.Source = new Source(403, 429, 30, 38);
+            mo.textureName = @"Game\texture";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(-18, 24);
+            mo.Load(content);
+            
+
+            for (int i = 0; i < 10; i++)
+                GameMap.mapTiles[i][0].mapObjects.Add(mo);
+
             Fighter a = new Fighter(true);
             a.Load(content);
+
+            Fighters.Add(a);
 
 
         }
@@ -173,12 +217,40 @@ namespace Minifice.GameManagement
 
         public void HandleInput(InputState input)
         {
-            
+            if (input.IsMouseLeftClickHold() || input.IsMouseRightClickHold())
+            {
+                // Myszka na interfejsie
+                if (input.CurrentMouseState.X < GameInterface.Width)
+                {
+                    GameInterface.HandleInput(input);
+                }
+                // Myszka w grze
+                else
+                {
+                    foreach (Fighter f in Fighters)
+                    {
+                        Vector2? pos = f.Move(GameMap, Fighters, Enemies, input);
+                        if (pos != null)
+                        {
+                            camera.Pos = (Vector2)pos;
+                        }
+                    }
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            
+            foreach (Fighter f in Fighters)
+            {
+                f.Update(gameTime);
+                f.Move(GameMap, Fighters, Enemies);
+            }
+            foreach (Enemy e in Enemies)
+            {
+                e.Update(gameTime);
+                e.Move(GameMap, Fighters, Enemies);
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

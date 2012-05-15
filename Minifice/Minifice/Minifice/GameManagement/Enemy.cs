@@ -12,7 +12,7 @@ namespace Minifice.GameManagement
 {
     public class Enemy : Unit
     {
-        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input, GameTime gameTime)
+        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
 
         }
