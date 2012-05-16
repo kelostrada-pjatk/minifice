@@ -42,7 +42,9 @@ namespace Minifice.GameManagement
             // Definicja animacji postaci
             this.animation = new Animation(2, 5, Direction.Left);
             AnimationFrame mini1 = new AnimationFrame(@"Game\mini1", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            mini1.origin = new Vector2(100, 200);
             AnimationFrame mini2 = new AnimationFrame(@"Game\mini2", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            mini2.origin = new Vector2(100, 200);
             this.animation.framesLeft.Add(mini1);
             this.animation.framesLeft.Add(mini2);
 
@@ -81,12 +83,12 @@ namespace Minifice.GameManagement
     Przesuń postać(wektor);
     Animuj ruch(kierunek);
                 */
-                Vector2 posClick = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + GameInterface.Width - position.X, input.CurrentMouseState.Y - resolution.Y/2 - position.Y);
+                Vector2 posClick = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2, input.CurrentMouseState.Y - resolution.Y/2 );
 
                 //Vector2 posClick = new Vector2((resolution.X - GameInterface.Width) / 2 + GameInterface.Width - position.X - (input.CurrentMouseState.X - GameInterface.Width), resolution.Y / 2 - position.Y - input.CurrentMouseState.Y);
                 float s = speed * (currentTime.ElapsedGameTime.Ticks) * 0.00001f;
 
-                posClick -= position;
+                //posClick -= position;
                 posClick.Normalize();
                 posClick *= s;
 
