@@ -75,7 +75,7 @@ namespace Minifice.GameManagement
 
         public GameManager()
         {
-            camera.Pos = new Vector2(700f, 700f);
+            camera.Pos = new Vector2(200f, 200f);
             camera.Zoom = 1.2f;
         }
 
@@ -155,6 +155,7 @@ namespace Minifice.GameManagement
 
             Fighters.Add(a);
 
+            camera.Pos = a.position;
 
         }
 
@@ -217,6 +218,8 @@ namespace Minifice.GameManagement
 
         public void HandleInput(InputState input)
         {
+            MouseCord = new Vector2(input.CurrentMouseState.X, input.CurrentMouseState.Y);
+
             if (input.IsMouseLeftClickHold() || input.IsMouseRightClickHold())
             {
                 // Myszka na interfejsie
@@ -253,11 +256,13 @@ namespace Minifice.GameManagement
             }
         }
 
+        private Vector2 MouseCord = Vector2.Zero;
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, null, null, null, null, camera.get_transformation(screenManager.GraphicsDevice));
 
-            //spriteBatch.Begin();
+            //spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
 
             //SpriteFont spriteFont = content.Load<SpriteFont>(@"Menu\menufont");
             //spriteBatch.DrawString(spriteFont, "TESTTESTTEST", new Vector2(100, 100), Color.White);
@@ -275,11 +280,18 @@ namespace Minifice.GameManagement
 
             spriteBatch.End();
 
+            SpriteFont font = screenManager.Font;
 
             // Inicjuje nowego spriteBatcha, żeby interfejs nie przesuwal sie z kamerą
             spriteBatch.Begin();
 
             GameInterface.Draw(spriteBatch);
+            //Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + GameInterface.Width - Fighters[0].position.X, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y);
+            Vector2 posClick = new Vector2(MouseCord.X - (screenManager.Settings.Resolution.X / 2 - Fighters[0].position.X), MouseCord.Y - (screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y));
+
+            spriteBatch.DrawString(font, (MouseCord.X-GameInterface.Width).ToString() + "," + MouseCord.Y.ToString(), new Vector2(10,0), Color.Red);
+            spriteBatch.DrawString(font, ((int)posClick.X).ToString() + "," + ((int)posClick.Y).ToString(), new Vector2(10, 50), Color.Red);
+            spriteBatch.DrawString(font, ((int)Fighters[0].position.X).ToString() + "," + ((int)Fighters[0].position.Y).ToString(), new Vector2(10, 100), Color.Red);
 
             spriteBatch.End();
 
