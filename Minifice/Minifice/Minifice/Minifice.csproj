@@ -116,6 +116,7 @@
     <Compile Include="GameManagement\AnimationFrame.cs" />
     <Compile Include="GameManagement\BackgroundSprite.cs" />
     <Compile Include="GameManagement\Bonus.cs" />
+    <Compile Include="GameManagement\Boundaries.cs" />
     <Compile Include="GameManagement\Enemy.cs" />
     <Compile Include="GameManagement\Fighter.cs" />
     <Compile Include="GameManagement\GameInterface.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="GameManagement\GameMap.cs" />
     <Compile Include="GameManagement\MapObject.cs" />
     <Compile Include="GameManagement\MapTile.cs" />
-    <Compile Include="GameManagement\Boundaries.cs" />
+    <Compile Include="GameManagement\BoundariesOld.cs" />
     <Compile Include="GameManagement\MoveStrategy.cs" />
     <Compile Include="GameManagement\PanelSprite.cs" />
     <Compile Include="GameManagement\Sprite.cs" />

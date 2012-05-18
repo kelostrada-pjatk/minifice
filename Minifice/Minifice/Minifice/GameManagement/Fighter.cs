@@ -53,7 +53,7 @@ namespace Minifice.GameManagement
             this.health = 2;
             this.isActive = true;
             this.position = new Vector2(100f, 100f);
-            this.speed = 0.7f;
+            this.speed = 1.1f;
             this.timeLastShot = new TimeSpan();
         }
 
@@ -93,6 +93,8 @@ namespace Minifice.GameManagement
                 posClick *= s;
 
                 Vector2 oldPosition = position;
+
+                // TODO: Sprawdzenie kolizji
 
                 position += posClick;
 
