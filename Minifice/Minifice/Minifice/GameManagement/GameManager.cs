@@ -127,7 +127,10 @@ namespace Minifice.GameManagement
             mo.Load(content);
 
             for (int i = 0; i < 10; i++)
+            {
                 GameMap.mapTiles[i][0].mapObjects.Add(mo);
+                //GameMap.mapTiles[i][0].mapObjects[i].boundaries += new Vector2(GameMap.TileShift.X * i, 0);
+            }
 
             mo = new MapObject();
             punkty.Clear();
@@ -287,30 +290,37 @@ namespace Minifice.GameManagement
 
             GameInterface.Draw(spriteBatch);
             //Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + GameInterface.Width - Fighters[0].position.X, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y);
-            Vector2 posClick = new Vector2(MouseCord.X - (screenManager.Settings.Resolution.X / 2 - Fighters[0].position.X), MouseCord.Y - (screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y));
+            Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 );
+            posClick += Fighters[0].position;
 
             spriteBatch.DrawString(font, (MouseCord.X-GameInterface.Width).ToString() + "," + MouseCord.Y.ToString(), new Vector2(10,0), Color.Red);
             spriteBatch.DrawString(font, ((int)posClick.X).ToString() + "," + ((int)posClick.Y).ToString(), new Vector2(10, 50), Color.Red);
             spriteBatch.DrawString(font, ((int)Fighters[0].position.X).ToString() + "," + ((int)Fighters[0].position.Y).ToString(), new Vector2(10, 100), Color.Red);
+            float j = (float)Math.Floor((2 * (int)Fighters[0].position.Y) / GameMap.TileShift.Y);
+            float i = (float)Math.Floor((int)Fighters[0].position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
 
 
-            Boundaries b1,b2;
-            List<Vector2> punkty = new List<Vector2>();
-            punkty.Add(new Vector2(0, 0));
-            punkty.Add(new Vector2(1, 0));
-            punkty.Add(new Vector2(1, 1));
-            punkty.Add(new Vector2(0, 1));
-            b1 = Boundaries.CreateFromPoints(punkty);
-            punkty.Clear();
-            punkty.Add(new Vector2(1, 1));
-            punkty.Add(new Vector2(2, 1));
-            punkty.Add(new Vector2(1, 2));
-            //punkty.Add(new Vector2(1.1f, 1));
-            b2 = Boundaries.CreateFromPoints(punkty);
-            if (b1.Intersects(b2))
-            {
-                spriteBatch.DrawString(font, "Intersects", new Vector2(10, 200), Color.Red);
-            }
+            spriteBatch.DrawString(font, "{" + i.ToString() + "," + j.ToString() + "}", new Vector2(10, 150), Color.Purple);
+
+
+            //Boundaries b1,b2;
+            //List<Vector2> punkty = new List<Vector2>();
+            //punkty.Add(new Vector2(0, 0));
+            //punkty.Add(new Vector2(1, 0));
+            //punkty.Add(new Vector2(1, 1));
+            //punkty.Add(new Vector2(0, 1));
+            //b1 = Boundaries.CreateFromPoints(punkty);
+            //punkty.Clear();
+            //punkty.Add(new Vector2(1, 1));
+            //punkty.Add(new Vector2(2, 1));
+            //punkty.Add(new Vector2(1, 2));
+            ////punkty.Add(new Vector2(1.1f, 1));
+            //b2 = Boundaries.CreateFromPoints(punkty);
+            //b1 += new Vector2(1);
+            //if (b1.Intersects(b2))
+            //{
+            //    spriteBatch.DrawString(font, "Intersects", new Vector2(10, 200), Color.Red);
+            //}
 
             spriteBatch.End();
 

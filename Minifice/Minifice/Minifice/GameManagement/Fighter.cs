@@ -42,13 +42,27 @@ namespace Minifice.GameManagement
             // Definicja animacji postaci
             this.animation = new Animation(2, 5, Direction.Left);
             AnimationFrame mini1 = new AnimationFrame(@"Game\mini1", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
-            mini1.origin = new Vector2(100, 200);
+            mini1.origin = new Vector2(100, 160);
             AnimationFrame mini2 = new AnimationFrame(@"Game\mini2", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
-            mini2.origin = new Vector2(100, 200);
+            mini2.origin = new Vector2(100, 160);
             this.animation.framesLeft.Add(mini1);
             this.animation.framesLeft.Add(mini2);
+            this.animation.framesRight.Add(mini1);
+            this.animation.framesRight.Add(mini2);
+            this.animation.framesUp.Add(mini1);
+            this.animation.framesUp.Add(mini2);
+            this.animation.framesDown.Add(mini1);
+            this.animation.framesDown.Add(mini2);
 
             this.animationDeath = new Animation();
+
+            List<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(-10, -10));
+            points.Add(new Vector2(-10, 10));
+            points.Add(new Vector2(10, 10));
+            points.Add(new Vector2(10, -10));
+
+            this.boundaries = Boundaries.CreateFromPoints(points);
             
             this.health = 2;
             this.isActive = true;
@@ -85,21 +99,67 @@ namespace Minifice.GameManagement
                 */
                 Vector2 posClick = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2, input.CurrentMouseState.Y - resolution.Y/2 );
 
-                //Vector2 posClick = new Vector2((resolution.X - GameInterface.Width) / 2 + GameInterface.Width - position.X - (input.CurrentMouseState.X - GameInterface.Width), resolution.Y / 2 - position.Y - input.CurrentMouseState.Y);
                 float s = speed * (currentTime.ElapsedGameTime.Ticks) * 0.00001f;
 
-                //posClick -= position;
-                posClick.Normalize();
+
+                if (posClick != Vector2.Zero)
+                    posClick.Normalize();
                 posClick *= s;
 
                 Vector2 oldPosition = position;
-
-                // TODO: Sprawdzenie kolizji
-
                 position += posClick;
 
-                animation.Update(Direction.Left, currentTime);
+                // TODO: Sprawdzenie kolizji
+                int j = (int)Math.Floor((2 * (int)position.Y) / GameMap.TileShift.Y);
+                int i = (int)Math.Floor((int)position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
+                if (i < 0) i = 0;
+                if (i > gameMap.width - 1) i = gameMap.width - 1;
+                if (j < 0) j = 0;
+                if (j > gameMap.height - 1) j = gameMap.height - 1;
 
+                bool intersects = false;
+
+                for (int k = -3; k < 4; k++)
+                {
+                    for (int l = -3; l < 4; l++)
+                    {
+                        if (i + k >= 0 && j + l >= 0 && i + k < gameMap.width - 1 && j + l < gameMap.height - 1)
+                        {
+                            foreach (var mo in gameMap.mapTiles[i + k][j + l].mapObjects)
+                            {
+                                
+                                if (mo.boundaries.Intersects(boundaries+position)) intersects = true;
+                            }
+                        }
+                    }
+                }
+
+                Direction direction=animation.direction;
+
+                if (!intersects)
+                {
+                    // Kierunek animacji
+                    Vector2 kier = position - oldPosition;
+                    if (kier.X > 0)
+                    {
+                        if (kier.X > Math.Abs(kier.Y))
+                            direction = Direction.Right;
+                        else
+                            direction = (kier.Y > 0) ? Direction.Down : Direction.Up;
+                    }
+                    else
+                    {
+                        if (Math.Abs(kier.X) > Math.Abs(kier.Y))
+                            direction = Direction.Left;
+                        else
+                            direction = (kier.Y > 0) ? Direction.Down : Direction.Up;
+                    }
+                }
+                else
+                {
+                    position -= posClick;
+                }
+                animation.Update(direction, currentTime);
                 return position;
             }
             return null;
