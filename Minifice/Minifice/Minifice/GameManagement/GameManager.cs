@@ -228,7 +228,7 @@ namespace Minifice.GameManagement
                     GameInterface.HandleInput(input);
                 }
                 // Myszka w grze
-                else
+                else if (input.IsMouseLeftClickHold())
                 {
                     foreach (Fighter f in Fighters)
                     {
@@ -292,6 +292,25 @@ namespace Minifice.GameManagement
             spriteBatch.DrawString(font, (MouseCord.X-GameInterface.Width).ToString() + "," + MouseCord.Y.ToString(), new Vector2(10,0), Color.Red);
             spriteBatch.DrawString(font, ((int)posClick.X).ToString() + "," + ((int)posClick.Y).ToString(), new Vector2(10, 50), Color.Red);
             spriteBatch.DrawString(font, ((int)Fighters[0].position.X).ToString() + "," + ((int)Fighters[0].position.Y).ToString(), new Vector2(10, 100), Color.Red);
+
+
+            Boundaries b1,b2;
+            List<Vector2> punkty = new List<Vector2>();
+            punkty.Add(new Vector2(0, 0));
+            punkty.Add(new Vector2(1, 0));
+            punkty.Add(new Vector2(1, 1));
+            punkty.Add(new Vector2(0, 1));
+            b1 = Boundaries.CreateFromPoints(punkty);
+            punkty.Clear();
+            punkty.Add(new Vector2(1, 1));
+            punkty.Add(new Vector2(2, 1));
+            punkty.Add(new Vector2(1, 2));
+            //punkty.Add(new Vector2(1.1f, 1));
+            b2 = Boundaries.CreateFromPoints(punkty);
+            if (b1.Intersects(b2))
+            {
+                spriteBatch.DrawString(font, "Intersects", new Vector2(10, 200), Color.Red);
+            }
 
             spriteBatch.End();
 
