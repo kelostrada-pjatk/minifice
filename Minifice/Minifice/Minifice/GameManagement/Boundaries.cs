@@ -114,6 +114,35 @@ namespace Minifice.GameManagement
 
             return false;
         }
+
+        public static Boundaries operator +(Boundaries b, Vector2 v)
+        {
+            Boundaries boundaries = new Boundaries();
+
+            foreach (var p in b.points)            
+                boundaries.points.Add(p + v);
+
+            foreach (var f in b.functions)
+                if (float.IsNaN(f.a))
+                    boundaries.functions.Add(new Function(f.a, f.b + v.X, f.p1 + v.Y, f.p2 + v.Y));
+                else
+                    boundaries.functions.Add(new Function(f.a, f.b + v.Y - f.a * v.X, f.p1 + v.X, f.p2 + v.X));
+                    
+
+            foreach (Vector2 w in boundaries.points)
+            {
+                if (w.X < boundaries.min.X)
+                    boundaries.min.X = w.X;
+                if (w.Y < boundaries.min.Y)
+                    boundaries.min.Y = w.Y;
+                if (w.X > boundaries.max.X)
+                    boundaries.max.X = w.X;
+                if (w.Y > boundaries.max.Y)
+                    boundaries.max.Y = w.Y;
+            }
+
+            return boundaries;
+        }
     }
 
     public class Function
