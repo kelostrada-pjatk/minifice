@@ -205,12 +205,19 @@ namespace Minifice.GameManagement
                         intersects = true;
             }
 
+            foreach (Enemy e in enemies)
+            {
+                if (!e.Equals(this))
+                    if ((boundaries + position).Intersects(e.boundaries + e.position))
+                        intersects = true;
+            }
+
             return intersects;
         }
 
         public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-
+            moveStrategy.Move(currentTime);
         }
 
         public override void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons)
