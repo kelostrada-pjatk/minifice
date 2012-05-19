@@ -111,10 +111,9 @@ namespace Minifice.GameManagement
 
             MapObject mo = new MapObject();
             List<Vector2> punkty = new List<Vector2>();
-            punkty.Add(new Vector2(0, 11));
+            punkty.Add(new Vector2(1, 6));
             punkty.Add(new Vector2(4, 13));
             punkty.Add(new Vector2(8, 13));
-            punkty.Add(new Vector2(29, 2));
             punkty.Add(new Vector2(25, 0));
             mo.boundaries = Boundaries.CreateFromPoints(punkty);
             mo.collectible = false;
@@ -128,7 +127,7 @@ namespace Minifice.GameManagement
 
             for (int i = 0; i < 10; i++)
             {
-                GameMap.mapTiles[i][0].mapObjects.Add(mo);
+                GameMap.mapTiles[i][10].mapObjects.Add(mo);
                 //GameMap.mapTiles[i][0].mapObjects[i].boundaries += new Vector2(GameMap.TileShift.X * i, 0);
             }
 
@@ -136,8 +135,8 @@ namespace Minifice.GameManagement
             punkty.Clear();
             punkty.Add(new Vector2(40, 13));
             punkty.Add(new Vector2(43, 13));
-            punkty.Add(new Vector2(47, 11));
-            punkty.Add(new Vector2(22, 0));
+            punkty.Add(new Vector2(46, 6));
+            punkty.Add(new Vector2(25, 0));
             //punkty.Add(new Vector2(18, 2));
             mo.boundaries = Boundaries.CreateFromPoints(punkty);
             mo.collectible = false;
@@ -151,12 +150,15 @@ namespace Minifice.GameManagement
             
 
             for (int i = 0; i < 10; i++)
-                GameMap.mapTiles[i][0].mapObjects.Add(mo);
+                GameMap.mapTiles[i][10].mapObjects.Add(mo);
 
-            Fighter a = new Fighter(true);
+            Fighter a = new Fighter(true, new Vector2(100f,100f));
             a.Load(content);
+            Fighter b = new Fighter(false, new Vector2(60f,60f));
+            b.Load(content);
 
             Fighters.Add(a);
+            Fighters.Add(b);
 
             camera.Pos = a.position;
 

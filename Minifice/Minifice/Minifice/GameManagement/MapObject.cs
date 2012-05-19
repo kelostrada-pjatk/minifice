@@ -29,7 +29,7 @@ namespace Minifice.GameManagement
         public override void Draw(SpriteBatch spriteBatch, Vector2 location, float layerDepth)
         {
 
-            layerDepth -= boundaries.Min.Y * 0.000001f;
+            layerDepth -= (boundaries.Max.Y + boundaries.Min.Y)/2 * 0.000001f;
 
             base.Draw(spriteBatch, location, layerDepth);
         }
