@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using ASD.Graph;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Testowy_Projekt
 {
@@ -21,151 +24,47 @@ namespace Testowy_Projekt
         {
             InitializeComponent();
 
-            List<string> ooo = new List<string>();
+        }
 
-            ooo.Add("działa?");
-
-            Foo(ooo);
-
-            foreach (var s in ooo)
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+            int x = 100;
+            int y = 100;
+            IGraph g = new AdjacencyListsGraph(false, x*y);
+            for (int i = 0; i < x; i++)
             {
-                textBox1.Text += s;
-            }
-
-            /*
-            Person Bartek = new Person("Bartek");
-            fileManager.Serialize<Person>(@"Bartek", Bartek);
-            Person Bartek2 = fileManager.Deserialize<Person>(@"Bartek");
-            textBox1.Text = Bartek2.ToString();
-        
-            */
-        }
-
-        public void Foo(List<string> bzebze)
-        {
-            bzebze.Add("dziala! :)");
-        }
-
-    }
-
-    public class Person
-    {
-        public string personName;
-        
-        public Test ukryte;
-
-        public Person(string name)
-        {
-            personName = name;
-            ukryte = new Test("ukryte pole");
-        }
-
-        public Person()
-        {
-            personName = null;
-            ukryte = new Test();
-        }
-
-        public override string ToString()
-        {
-            return (personName+" "+ukryte);
-        }
-
-    }
-
-    
-    public class DataItem<TKey, TValue>
-    {
-        public TKey Key;
-        public TValue Value;
-
-        public DataItem()
-        {
-
-        }
-
-        public DataItem(TKey key, TValue value)
-        {
-            Key = key;
-            Value = value;
-        }
-    }
-
-    public class Pole
-    {
-        [XmlAttribute]
-        public string Field;
-        public Pole()
-        {
-            Field = "Pole";
-        }
-        public Pole(string a)
-        {
-            Field = a;
-        }
-        public static implicit operator Pole(string a)
-        {
-            return new Pole(a);
-        }
-    }
-
-    public class Test
-    {
-        
-        private string jeszczeBardziejUkryte;
-        [XmlElement("ABC")]
-        public string JeszczeBardziejUkryte
-        {
-            get { return jeszczeBardziejUkryte; }
-            set { jeszczeBardziejUkryte = value; }
-        }
-
-        private Dictionary<Pole, int> slownik = new Dictionary<Pole, int>();
-
-        [XmlArray]
-        public List<DataItem<Pole, int>> Slownik
-        {
-            get
-            {
-                List<DataItem<Pole, int>> s = new List<DataItem<Pole, int>>(slownik.Count);
-                foreach (Pole key in slownik.Keys)
+                for (int j = 0; j < y; j++)
                 {
-                    s.Add(new DataItem<Pole, int>(key, slownik[key]));
-                }
-                return s;
-            }
-            set
-            {
-                foreach (var di in value)
-                {
-                    slownik.Add(di.Key, di.Value);
+                    if (rand.Next(0, 3) != 3)
+                        g.AddEdge(i, j, rand.Next(1,3));
                 }
             }
+            textBox1.Text = "";
+
+            Edge[] path;
+
+            int s = 3, t = 24;
+
+            g.DelEdge(s, t);
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            if (g.AStar(s, t, out path))
+            {
+                foreach (var p in path)
+                    textBox1.Text += p.From + ",";
+                textBox1.Text += t;
+            }
+
+            textBox2.Text = sw.Elapsed.Milliseconds.ToString();
+            
         }
 
-        public Test()
-        {
-            jeszczeBardziejUkryte = null;
-            AktualizacjaSlownika();
-        }
-        public Test(string ukryte)
-        {
-            jeszczeBardziejUkryte = ukryte;
-            AktualizacjaSlownika();
-        }
-
-        public void AktualizacjaSlownika()
-        {
-            slownik.Add("Kot", 3);
-            slownik.Add("Pies", 2);
-            slownik.Add("Mysz", 6);
-        }
-
-        public override string ToString()
-        {
-            return (jeszczeBardziejUkryte);
-        }
+        
     }
+
 
 
 }

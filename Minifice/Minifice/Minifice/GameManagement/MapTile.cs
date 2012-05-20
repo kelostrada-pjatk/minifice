@@ -13,7 +13,7 @@ namespace Minifice.GameManagement
         #region Pola
 
         public BackgroundSprite backgroundSprite;
-        public List<MapObject> mapObjects;
+        public List<MapObject> mapObjects = new List<MapObject>();
 
         #endregion
 

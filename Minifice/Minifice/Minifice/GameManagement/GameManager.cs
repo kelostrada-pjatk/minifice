@@ -12,6 +12,7 @@ using Minifice.Enums;
 using Minifice.ScreenManagement;
 using Minifice.FileManagement;
 using Microsoft.Xna.Framework.Input;
+using Minifice.GameManagement.Movement;
 #endregion
 
 namespace Minifice.GameManagement
@@ -154,8 +155,10 @@ namespace Minifice.GameManagement
 
             Fighter a = new Fighter(true, new Vector2(100f,100f));
             a.Load(content);
+            
             Fighter b = new Fighter(false, new Vector2(60f,60f));
             b.Load(content);
+            b.moveStrategy = new Follow(GameMap, Fighters, Enemies, b, a);
 
             Fighters.Add(a);
             Fighters.Add(b);

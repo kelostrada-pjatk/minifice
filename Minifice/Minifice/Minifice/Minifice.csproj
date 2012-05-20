@@ -60,6 +60,10 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="graph, Version=5.0.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameManagement\Movement\graph.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -125,7 +129,10 @@
     <Compile Include="GameManagement\MapObject.cs" />
     <Compile Include="GameManagement\MapTile.cs" />
     <Compile Include="GameManagement\BoundariesOld.cs" />
-    <Compile Include="GameManagement\MoveStrategy.cs" />
+    <Compile Include="GameManagement\Movement\Follow.cs" />
+    <Compile Include="GameManagement\Movement\GameMapToGraphExtender.cs" />
+    <Compile Include="GameManagement\Movement\MoveStrategy.cs" />
+    <Compile Include="GameManagement\Movement\Vector2Extender.cs" />
     <Compile Include="GameManagement\PanelSprite.cs" />
     <Compile Include="GameManagement\Sprite.cs" />
     <Compile Include="GameManagement\Unit.cs" />
@@ -149,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
+    <Content Include="GameManagement\Movement\graph.dll" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
