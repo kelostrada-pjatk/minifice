@@ -167,13 +167,8 @@ namespace Minifice.GameManagement
 
         private bool Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-            // Sprawdzenie kolizji
-            int j = (int)Math.Floor((2 * (int)position.Y) / GameMap.TileShift.Y);
-            int i = (int)Math.Floor((int)position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
-            if (i < 0) i = 0;
-            if (i > gameMap.width) i = gameMap.width - 1;
-            if (j < 0) j = 0;
-            if (j > gameMap.height - 1) j = gameMap.height - 1;
+            int i = (int)GetMapPosition(gameMap).X;
+            int j = (int)GetMapPosition(gameMap).Y;
 
             bool intersects = false;
 
@@ -217,7 +212,8 @@ namespace Minifice.GameManagement
 
         public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-            moveStrategy.Move(currentTime);
+            if (moveStrategy != null)
+                moveStrategy.Move(currentTime);
         }
 
         public override void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons)
