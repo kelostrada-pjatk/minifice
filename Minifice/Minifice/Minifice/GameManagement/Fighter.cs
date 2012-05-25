@@ -20,6 +20,7 @@ namespace Minifice.GameManagement
         bool playerControlled;
         bool isActive;
         int health;
+        Vector2 destination;
 
         #endregion
 
@@ -29,6 +30,18 @@ namespace Minifice.GameManagement
         public bool IsAlive
         {
             get { return health > 0;     }
+        }
+
+        public Vector2 Destination
+        {
+            get
+            {
+                return destination;
+            }
+            set
+            {
+                destination = value;
+            }
         }
 
         #endregion
