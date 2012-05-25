@@ -77,7 +77,7 @@ namespace Minifice.GameManagement
         public GameManager()
         {
             camera.Pos = new Vector2(200f, 200f);
-            camera.Zoom = 1.2f;
+            camera.Zoom = 1f;
         }
 
         public GameManager(Difficulty difficulty,ScreenManager screenManager) : this()
@@ -86,14 +86,14 @@ namespace Minifice.GameManagement
             this.screenManager = screenManager;
 
             int tileCount = 50;
-            camera.Zoom = screenManager.Settings.Resolution.Y / tileCount / GameMap.TileShift.Y * 2;
+            //camera.Zoom = screenManager.Settings.Resolution.Y / tileCount / GameMap.TileShift.Y * 2;
             
-            GameMap = new GameMap(10,20);
+            GameMap = new GameMap(50,100);
             
             content = screenManager.Game.Content;
 
-            for (int i = 0; i < 10; i++)
-                for (int j = 0; j < 20; j++)
+            for (int i = 0; i < 50; i++)
+                for (int j = 0; j < 100; j++)
                     GameMap.mapTiles[i][j] = new MapTile(new BackgroundSprite(@"Game\texture", new Rectangle(152, 379, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
 
             GameMap.Load(content);
@@ -126,7 +126,7 @@ namespace Minifice.GameManagement
             mo.origin = new Vector2(0, 24);
             mo.Load(content);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 GameMap.mapTiles[i][10].mapObjects.Add(mo);
                 //GameMap.mapTiles[i][0].mapObjects[i].boundaries += new Vector2(GameMap.TileShift.X * i, 0);
@@ -150,7 +150,7 @@ namespace Minifice.GameManagement
             mo.Load(content);
             
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
                 GameMap.mapTiles[i][10].mapObjects.Add(mo);
 
             Fighter a = new Fighter(true, new Vector2(100f,100f));
