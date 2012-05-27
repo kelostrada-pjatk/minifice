@@ -161,8 +161,23 @@ namespace Minifice.GameManagement
             b.Load(content);
             b.moveStrategy = new Follow(GameMap, Fighters, Enemies, b, a);
 
+            Fighter c = new Fighter(false, new Vector2(50f, 50f));
+            c.Load(content);
+            c.moveStrategy = new Follow(GameMap, Fighters, Enemies, c, b);
+
+            Fighter d = new Fighter(false, new Vector2(40f, 40f));
+            d.Load(content);
+            d.moveStrategy = new Follow(GameMap, Fighters, Enemies, d, c);
+
+            Fighter e = new Fighter(false, new Vector2(30f, 30f));
+            e.Load(content);
+            e.moveStrategy = new Follow(GameMap, Fighters, Enemies, e, d);
+
             Fighters.Add(a);
             Fighters.Add(b);
+            Fighters.Add(c);
+            Fighters.Add(d);
+            Fighters.Add(e);
 
             camera.Pos = a.position;
 

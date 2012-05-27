@@ -35,13 +35,11 @@ namespace Minifice.GameManagement.Movement
                 shift.Normalize();
             shift *= s;
 
-            if ((unit.position + shift).Similar(destination.position,s)) return null;
+            if ((unit.position + shift).Similar(destination.position,s+20f)) return null;
 
             Vector2 oldPosition = unit.position;
             unit.position += shift;
 
-            
-            
             Direction direction = unit.animation.direction;
 
             if (!Collision(gameMap, fighters, enemies))
@@ -67,7 +65,7 @@ namespace Minifice.GameManagement.Movement
             {
                 bool stop = true;
                 unit.position -= shift;
-
+                
                 // Helper do poruszania sie wzdłuż boundaries?
                 float degrees = 5;
                 while (degrees < 90)
@@ -105,9 +103,9 @@ namespace Minifice.GameManagement.Movement
                         unit.position -= shift;
                         
                     }
-
+                    
                 }
-
+                
                 if (stop) return null;
 
 
@@ -124,9 +122,9 @@ namespace Minifice.GameManagement.Movement
 
             bool intersects = false;
 
-            for (int k = -3; k < 4; k++)
+            for (int k = -2; k < 3; k++)
             {
-                for (int l = -3; l < 4; l++)
+                for (int l = -2; l < 3; l++)
                 {
                     if (i + k >= 0 && j + l >= 0 && i + k < gameMap.width && j + l < gameMap.height)
                     {
@@ -144,20 +142,22 @@ namespace Minifice.GameManagement.Movement
                     }
                 }
             }
-
+            /*
             foreach (Fighter f in fighters)
             {
                 if (!f.Equals(unit))
                     if ((unit.boundaries + unit.position).Intersects(f.boundaries + f.position))
                         intersects = true;
             }
-
+            */
+            /*
             foreach (Enemy e in enemies)
             {
                 if (!e.Equals(unit))
                     if ((unit.boundaries + unit.position).Intersects(e.boundaries + e.position))
                         intersects = true;
             }
+            */
 
             return intersects;
         }
