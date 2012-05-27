@@ -8,6 +8,8 @@ using Minifice.ScreenManagement;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Minifice.GameManagement.Movement;
+using Minifice.Enums;
+using Minifice.GameManagement.Shooting;
 #endregion
 
 namespace Minifice.GameManagement
@@ -20,10 +22,11 @@ namespace Minifice.GameManagement
         public Animation animationDeath;
         public MoveStrategy moveStrategy;
         public float speed;
-        public TimeSpan timeLastShot;
+        protected TimeSpan timeLastShot = new TimeSpan(0);
         public Vector2 position;
         protected GameTime currentTime;
         protected TimeSpan timeLastMoved = new TimeSpan(0);
+        public static float shotFrequency = 1.5f;
         #endregion
 
         #region Właściwości
@@ -53,9 +56,7 @@ namespace Minifice.GameManagement
         #region Metody Publiczne
 
         public abstract Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies);
-
-        public abstract void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons);
-
+        
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         public void Update(GameTime gameTime)

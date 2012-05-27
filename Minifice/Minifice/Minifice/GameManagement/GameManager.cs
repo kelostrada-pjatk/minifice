@@ -13,6 +13,7 @@ using Minifice.ScreenManagement;
 using Minifice.FileManagement;
 using Microsoft.Xna.Framework.Input;
 using Minifice.GameManagement.Movement;
+using Minifice.GameManagement.Shooting;
 #endregion
 
 namespace Minifice.GameManagement
@@ -37,7 +38,7 @@ namespace Minifice.GameManagement
         public List<Bonus> Bonuses;
         Dictionary<Weapon, int> weaponsArsenal = new Dictionary<Weapon,int>();
         [XmlIgnore]
-        public List<Weapon> Missiles;
+        public List<Missile> Missiles;
         [XmlIgnore]
         ContentManager content;
         [XmlIgnore]
@@ -104,7 +105,7 @@ namespace Minifice.GameManagement
             Fighters = new List<Fighter>();
             Enemies = new List<Enemy>();
             Bonuses = new List<Bonus>();
-            Missiles = new List<Weapon>();
+            Missiles = new List<Missile>();
             weaponsArsenal = new Dictionary<Weapon,int>();
 
             //FileManager fileManager = new FileManager();
@@ -196,15 +197,13 @@ namespace Minifice.GameManagement
             GameManager newInstance = fileManager.Deserialize<GameManager>(@"Missions\Mission1");
             newInstance.Fighters = new List<Fighter>();
             newInstance.Bonuses = new List<Bonus>();
-            newInstance.Missiles = new List<Weapon>();
+            newInstance.Missiles = new List<Missile>();
             newInstance.GameMap.Load(content);
             foreach (Enemy e in newInstance.Enemies)
                 e.Load(content);
             foreach (Fighter f in newInstance.Fighters)
                 f.Load(content);
-            foreach (KeyValuePair<Weapon,int> w in newInstance.weaponsArsenal)
-                w.Key.Load(content);
-
+            
             newInstance.difficulty = difficulty;
             newInstance.screenManager = screenManager;
             newInstance.MissionId = 1;
@@ -227,16 +226,14 @@ namespace Minifice.GameManagement
                 e.Load(content);
             foreach (Fighter f in newInstance.Fighters)
                 f.Load(content);
-            foreach (KeyValuePair<Weapon, int> w in newInstance.weaponsArsenal)
-                w.Key.Load(content);
-
+            
             MissionId = missionId;
             GameMap = newInstance.GameMap;
             Fighters = newInstance.Fighters;
             Enemies = newInstance.Enemies;
             Bonuses = newInstance.Bonuses;
             WeaponsArsenal = new List<DataItem<Weapon,int>>();
-            Missiles = new List<Weapon>();
+            Missiles = new List<Missile>();
             
         }
 
@@ -250,13 +247,24 @@ namespace Minifice.GameManagement
                     GameInterface.HandleInput(input);
                 }
                 // Myszka w grze
-                else if (input.IsNewMouseRightClick(out MouseCord))
+                else
                 {
-                    foreach (Fighter f in Fighters)
+                    if (input.IsNewMouseRightClick(out MouseCord))
                     {
-                        f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
+                        foreach (Fighter f in Fighters)
+                        {
+                            f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
+                        }
+                    }
+                    if (input.IsNewMouseLeftClick(out MouseCord))
+                    {
+                        foreach (Fighter f in Fighters)
+                        {
+                            f.Shoot(input, Weapon.Gun, screenManager.GameTime, Missiles);
+                        }
                     }
                 }
+                
             }
         }
 
@@ -295,8 +303,8 @@ namespace Minifice.GameManagement
                 f.Draw(gameTime, spriteBatch);
             foreach (Enemy e in Enemies)
                 e.Draw(gameTime, spriteBatch);
-            foreach (Weapon w in Missiles)
-                w.Draw(gameTime, spriteBatch);
+            foreach (Missile m in Missiles)
+                m.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
 
@@ -320,7 +328,7 @@ namespace Minifice.GameManagement
             spriteBatch.DrawString(font, "{" + i.ToString() + "," + j.ToString() + "}", new Vector2(10, 150), Color.Purple);
 
 
-            //Boundaries b1,b2;
+            //Boundaries b1, b2;
             //List<Vector2> punkty = new List<Vector2>();
             //punkty.Add(new Vector2(0, 0));
             //punkty.Add(new Vector2(1, 0));
@@ -329,11 +337,10 @@ namespace Minifice.GameManagement
             //b1 = Boundaries.CreateFromPoints(punkty);
             //punkty.Clear();
             //punkty.Add(new Vector2(1, 1));
-            //punkty.Add(new Vector2(2, 1));
-            //punkty.Add(new Vector2(1, 2));
+            ////punkty.Add(new Vector2(2, 1));
+            ////punkty.Add(new Vector2(1, 2));
             ////punkty.Add(new Vector2(1.1f, 1));
             //b2 = Boundaries.CreateFromPoints(punkty);
-            //b1 += new Vector2(1);
             //if (b1.Intersects(b2))
             //{
             //    spriteBatch.DrawString(font, "Intersects", new Vector2(10, 200), Color.Red);
