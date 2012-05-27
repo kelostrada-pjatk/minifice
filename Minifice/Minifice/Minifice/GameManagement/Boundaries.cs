@@ -81,20 +81,20 @@ namespace Minifice.GameManagement
             foreach (var f1 in b.functions)
                 foreach (var f2 in functions)
                 {
-                    if (f1.a == float.NaN || f2.a == float.NaN)
+                    if (float.IsNaN(f1.a) || float.IsNaN(f2.a))
                     {
                         // Ktoras z funkcji nie jest tak na prawde funkcja. Teraz przypadki
-                        if (f1.a == float.NaN && f2.a == float.NaN)
+                        if (float.IsNaN(f1.a) && float.IsNaN(f2.a))
                         {
                             if (f1.b == f2.b)
                                 if (f1.p2 >= f2.p1 && f2.p2 >= f1.p1) return true;
                         }
-                        if (f1.a == float.NaN && f2.a != float.NaN)
+                        if (float.IsNaN(f1.a) && !float.IsNaN(f2.a))
                         {
                             if (f1.b >= f2.p1 && f1.b <= f2.p2)
                                 if (f2.func(f1.b) >= f1.p1 && f2.func(f1.b) <= f1.p2) return true;
                         }
-                        if (f1.a != float.NaN && f2.a == float.NaN)
+                        if (!float.IsNaN(f1.a) && float.IsNaN(f2.a))
                         {
                             if (f2.b >= f1.p1 && f2.b <= f1.p2)
                                 if (f1.func(f2.b) >= f2.p1 && f1.func(f2.b) <= f2.p2) return true;
