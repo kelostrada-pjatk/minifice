@@ -32,6 +32,7 @@ namespace Minifice.GameManagement
             get { return health > 0;     }
         }
 
+        [XmlIgnore]
         public Vector2 Destination
         {
             get
@@ -42,6 +43,13 @@ namespace Minifice.GameManagement
             {
                 destination = value;
             }
+        }
+
+        [XmlAttribute]
+        public bool PlayerControlled
+        {
+            get { return playerControlled; }
+            set { playerControlled = value; }
         }
 
         #endregion
@@ -82,14 +90,20 @@ namespace Minifice.GameManagement
             this.isActive = true;
             this.speed = 0.7f;
             this.timeLastShot = new TimeSpan();
+
+            this.destination = new Vector2(position.X, position.Y);
         }
 
         #endregion
 
         #region Implementacje Metod
 
-        public Vector2? Move(Vector2 resolution, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
+        public void Move(Vector2 resolution, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
         {
+            if (playerControlled)
+                Destination = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + position.X, input.CurrentMouseState.Y - resolution.Y / 2 + position.Y);
+
+            /*
             if (playerControlled)
             {
                 Vector2 posClick = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2, input.CurrentMouseState.Y - resolution.Y/2 );
@@ -176,8 +190,10 @@ namespace Minifice.GameManagement
                 return position;
             }
             return null;
+            */
         }
 
+        /*
         private bool Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
             int i = (int)GetMapPosition(gameMap).X;
@@ -222,11 +238,14 @@ namespace Minifice.GameManagement
 
             return intersects;
         }
+        */
 
-        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
+        public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
             if (moveStrategy != null)
-                moveStrategy.Move(currentTime);
+                return moveStrategy.Move(currentTime);
+
+            return null;
         }
 
         public override void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons)

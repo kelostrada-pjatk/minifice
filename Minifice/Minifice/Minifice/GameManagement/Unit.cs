@@ -52,7 +52,7 @@ namespace Minifice.GameManagement
 
         #region Metody Publiczne
 
-        public abstract void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies);
+        public abstract Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies);
 
         public abstract void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons);
 

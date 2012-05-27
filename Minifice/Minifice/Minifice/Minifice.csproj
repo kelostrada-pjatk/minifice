@@ -129,6 +129,7 @@
     <Compile Include="GameManagement\MapObject.cs" />
     <Compile Include="GameManagement\MapTile.cs" />
     <Compile Include="GameManagement\BoundariesOld.cs" />
+    <Compile Include="GameManagement\Movement\GotoPoint.cs" />
     <Compile Include="GameManagement\Movement\Follow.cs" />
     <Compile Include="GameManagement\Movement\GameMapToGraphExtender.cs" />
     <Compile Include="GameManagement\Movement\MoveStrategy.cs" />

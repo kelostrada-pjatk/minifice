@@ -12,9 +12,9 @@ namespace Minifice.GameManagement
 {
     public class Enemy : Unit
     {
-        public override void Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
+        public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-
+            return null;
         }
 
         public override void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons)

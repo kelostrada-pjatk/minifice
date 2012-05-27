@@ -153,8 +153,9 @@ namespace Minifice.GameManagement
             for (int i = 0; i < 50; i++)
                 GameMap.mapTiles[i][10].mapObjects.Add(mo);
 
-            Fighter a = new Fighter(true, new Vector2(100f,100f));
+            Fighter a = new Fighter(true, new Vector2(200f,200f));
             a.Load(content);
+            a.moveStrategy = new GotoPoint(GameMap, Fighters, Enemies, a);
             
             Fighter b = new Fighter(false, new Vector2(60f,60f));
             b.Load(content);
@@ -226,9 +227,7 @@ namespace Minifice.GameManagement
 
         public void HandleInput(InputState input)
         {
-            MouseCord = new Vector2(input.CurrentMouseState.X, input.CurrentMouseState.Y);
-
-            if (input.IsMouseLeftClickHold() || input.IsMouseRightClickHold())
+            if (input.IsNewMouseLeftClick(out MouseCord) || input.IsNewMouseRightClick(out MouseCord))
             {
                 // Myszka na interfejsie
                 if (input.CurrentMouseState.X < GameInterface.Width)
@@ -236,15 +235,11 @@ namespace Minifice.GameManagement
                     GameInterface.HandleInput(input);
                 }
                 // Myszka w grze
-                else if (input.IsMouseLeftClickHold())
+                else if (input.IsNewMouseRightClick(out MouseCord))
                 {
                     foreach (Fighter f in Fighters)
                     {
-                        Vector2? pos = f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
-                        if (pos != null)
-                        {
-                            camera.Pos = (Vector2)pos;
-                        }
+                        f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
                     }
                 }
             }
@@ -255,7 +250,9 @@ namespace Minifice.GameManagement
             foreach (Fighter f in Fighters)
             {
                 f.Update(gameTime);
-                f.Move(GameMap, Fighters, Enemies);
+                Vector2? pos = f.Move(GameMap, Fighters, Enemies);
+                if (pos != null && f.PlayerControlled)
+                    camera.Pos = (Vector2)pos;
             }
             foreach (Enemy e in Enemies)
             {
