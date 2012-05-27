@@ -88,7 +88,7 @@ namespace Minifice.GameManagement
             
             this.health = 2;
             this.isActive = true;
-            this.speed = 0.7f;
+            this.speed = 0.55f;
             this.timeLastShot = new TimeSpan();
 
             this.destination = new Vector2(position.X, position.Y);

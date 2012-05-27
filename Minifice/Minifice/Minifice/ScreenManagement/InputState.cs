@@ -85,7 +85,7 @@ namespace Minifice.ScreenManagement
         public bool IsNewMouseLeftClick(out Vector2 Coord)
         {
             Coord = new Vector2(currentMouseState.X,currentMouseState.Y);
-            return (currentMouseState.LeftButton == ButtonState.Released && lastMouseState.LeftButton == ButtonState.Pressed);
+            return (currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Minifice.ScreenManagement
         public bool IsNewMouseRightClick(out Vector2 Coord)
         {
             Coord = new Vector2(currentMouseState.X, currentMouseState.Y);
-            return (currentMouseState.RightButton == ButtonState.Released && lastMouseState.RightButton == ButtonState.Pressed);
+            return (currentMouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton == ButtonState.Released);
         }
 
         /// <summary>

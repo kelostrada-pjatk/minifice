@@ -124,9 +124,9 @@ namespace Minifice.GameManagement.Movement
 
             bool intersects = false;
 
-            for (int k = -3; k < 4; k++)
+            for (int k = -2; k < 3; k++)
             {
-                for (int l = -3; l < 4; l++)
+                for (int l = -2; l < 3; l++)
                 {
                     if (i + k >= 0 && j + l >= 0 && i + k < gameMap.width && j + l < gameMap.height)
                     {
@@ -145,12 +145,13 @@ namespace Minifice.GameManagement.Movement
                 }
             }
 
-            foreach (Fighter f in fighters)
-            {
-                if (!f.Equals(unit))
-                    if ((unit.boundaries + unit.position).Intersects(f.boundaries + f.position))
-                        intersects = true;
-            }
+            if (!(unit as Fighter).PlayerControlled)
+                foreach (Fighter f in fighters)
+                {
+                    if (!f.Equals(unit))
+                        if ((unit.boundaries + unit.position).Intersects(f.boundaries + f.position))
+                            intersects = true;
+                }
 
             foreach (Enemy e in enemies)
             {
