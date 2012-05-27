@@ -28,9 +28,6 @@ namespace Minifice.GameManagement.Movement
             this.unit = unit;
         }
 
-        public virtual void Move(GameTime gameTime)
-        {
-            
-        }
+        public abstract Vector2? Move(GameTime gameTime);
     }
 }

@@ -8,34 +8,33 @@ using Minifice.Enums;
 
 namespace Minifice.GameManagement.Movement
 {
-    public class Follow : MoveStrategy
+    public class GotoPoint : MoveStrategy
     {
-        public Unit destination;
-
-        public Follow()
+        public GotoPoint()
             : base()
         {
 
         }
 
-        public Follow(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Unit unit, Unit destination)
+        public GotoPoint(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Fighter unit)
             : base(gameMap, fighters, enemies, unit)
         {
-            this.destination = destination;
+
         }
 
         public override Vector2? Move(GameTime gameTime)
         {
+
             float s = unit.speed * (gameTime.ElapsedGameTime.Ticks) * 0.00001f;
 
 
-            Vector2 shift = new Vector2(destination.position.X - unit.position.X, destination.position.Y - unit.position.Y);
+            Vector2 shift = new Vector2((unit as Fighter).Destination.X - unit.position.X, (unit as Fighter).Destination.Y - unit.position.Y);
 
             if (shift != Vector2.Zero)
                 shift.Normalize();
             shift *= s;
 
-            if ((unit.position + shift).Similar(destination.position,s)) return null;
+            if ((unit.position + shift).Similar((unit as Fighter).Destination,s)) return null;
 
             Vector2 oldPosition = unit.position;
             unit.position += shift;
@@ -108,13 +107,14 @@ namespace Minifice.GameManagement.Movement
 
                 }
 
-                if (stop) return null;
+                if (stop) (unit as Fighter).Destination = new Vector2(unit.position.X, unit.position.Y);
 
 
 
             }
             unit.animation.Update(direction, gameTime);
             return unit.position;
+            
         }
 
         private bool Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
@@ -161,5 +161,6 @@ namespace Minifice.GameManagement.Movement
 
             return intersects;
         }
+            
     }
 }

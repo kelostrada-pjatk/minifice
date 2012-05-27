@@ -18,5 +18,10 @@ namespace Minifice.GameManagement.Movement
             if (j > gameMap.height - 1) j = gameMap.height - 1;
             return new Vector2(i, j);
         }
+
+        public static bool Similar(this Vector2 v1, Vector2 v2, float comparer)
+        {
+            return (Math.Abs(v1.X - v2.X) <= comparer && Math.Abs(v1.Y - v2.Y) <= comparer) ;
+        }
     }
 }
