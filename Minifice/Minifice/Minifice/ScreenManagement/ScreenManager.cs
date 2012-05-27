@@ -40,6 +40,8 @@ namespace Minifice.ScreenManagement
         bool isInitialized;
         bool traceEnabled;
 
+        public GameTime GameTime;
+
         #endregion
 
         #region W³aœciwoœci
@@ -171,6 +173,7 @@ namespace Minifice.ScreenManagement
         /// </summary>
         public override void Update(GameTime gameTime)
         {
+            this.GameTime = gameTime;
             input.Update();
 
             screensToUpdate.Clear();

@@ -113,7 +113,9 @@
   <ItemGroup>
     <Compile Include="Enums\Difficulty.cs" />
     <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Enums\Faction.cs" />
     <Compile Include="Enums\ScreenState.cs" />
+    <Compile Include="Enums\Weapon.cs" />
     <Compile Include="FileManagement\DataItem.cs" />
     <Compile Include="FileManagement\FileManager.cs" />
     <Compile Include="GameManagement\Animation.cs" />
@@ -135,9 +137,10 @@
     <Compile Include="GameManagement\Movement\MoveStrategy.cs" />
     <Compile Include="GameManagement\Movement\Vector2Extender.cs" />
     <Compile Include="GameManagement\PanelSprite.cs" />
+    <Compile Include="GameManagement\Shooting\Gun.cs" />
+    <Compile Include="GameManagement\Shooting\Missile.cs" />
     <Compile Include="GameManagement\Sprite.cs" />
     <Compile Include="GameManagement\Unit.cs" />
-    <Compile Include="GameManagement\Weapon.cs" />
     <Compile Include="MenuScreens\LoadingScreen.cs" />
     <Compile Include="GameScreens\GameplayScreen.cs" />
     <Compile Include="MenuScreens\NewGameMenuScreen.cs" />

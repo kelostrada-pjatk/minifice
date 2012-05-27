@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Minifice.ScreenManagement;
+using Minifice.Enums;
+using Minifice.GameManagement.Shooting;
 
 
 namespace Minifice.GameManagement
@@ -15,11 +17,6 @@ namespace Minifice.GameManagement
         public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
             return null;
-        }
-
-        public override void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Weapon> weapons)
-        {
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

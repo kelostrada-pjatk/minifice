@@ -121,9 +121,7 @@ namespace Minifice.GameManagement.Movement
         {
             int i = (int)unit.GetMapPosition(gameMap).X;
             int j = (int)unit.GetMapPosition(gameMap).Y;
-
-            bool intersects = false;
-
+            
             for (int k = -2; k < 3; k++)
             {
                 for (int l = -2; l < 3; l++)
@@ -134,11 +132,11 @@ namespace Minifice.GameManagement.Movement
                         {
                             if ((j + l) % 2 == 0)
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) intersects = true;
+                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) return true;
                             }
                             else
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X + GameMap.TileShift.X / 2, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) intersects = true;
+                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X + GameMap.TileShift.X / 2, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) return true;
                             }
                         }
                     }
@@ -150,17 +148,17 @@ namespace Minifice.GameManagement.Movement
                 {
                     if (!f.Equals(unit))
                         if ((unit.boundaries + unit.position).Intersects(f.boundaries + f.position))
-                            intersects = true;
+                            return true;
                 }
 
             foreach (Enemy e in enemies)
             {
                 if (!e.Equals(unit))
                     if ((unit.boundaries + unit.position).Intersects(e.boundaries + e.position))
-                        intersects = true;
+                        return true;
             }
 
-            return intersects;
+            return false;
         }
             
     }
