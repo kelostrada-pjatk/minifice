@@ -26,7 +26,7 @@ namespace Minifice.GameManagement
         public Vector2 position;
         protected GameTime currentTime;
         protected TimeSpan timeLastMoved = new TimeSpan(0);
-        public static float shotFrequency = 1.5f;
+        public static float shotFrequency = 1.1f;
         #endregion
 
         #region Właściwości

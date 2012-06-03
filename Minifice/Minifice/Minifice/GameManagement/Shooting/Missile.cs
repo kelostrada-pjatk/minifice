@@ -23,17 +23,18 @@ namespace Minifice.GameManagement.Shooting
         protected Faction faction;
         protected TimeSpan timeStartMove;
 
+        public abstract void Load(ContentManager content);
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         public abstract void Update(GameTime gameTime, GameMap gameMap, List<Fighter> fighter, List<Enemy> enemy);
 
-        public static Missile FromWeapon(Weapon weapon, Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction)
+        public static Missile FromWeapon(Weapon weapon, Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction, GameTime gameTime)
         {
             switch (weapon)
             {
                 case Weapon.Gun:
-                    return new Gun(start, target, timeStart, faction);
+                    return new Gun(start, target, timeStart, faction, gameTime);
                 case Weapon.Grenade:
                     break;
                 case Weapon.Mine:
