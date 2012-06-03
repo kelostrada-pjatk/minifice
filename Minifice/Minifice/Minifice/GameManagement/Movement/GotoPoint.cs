@@ -27,7 +27,6 @@ namespace Minifice.GameManagement.Movement
 
             float s = unit.speed * (gameTime.ElapsedGameTime.Ticks) * 0.00001f;
 
-
             Vector2 shift = new Vector2((unit as Fighter).Destination.X - unit.position.X, (unit as Fighter).Destination.Y - unit.position.Y);
 
             if (shift != Vector2.Zero)

@@ -115,12 +115,13 @@ namespace Minifice.GameManagement
             return null;
         }
 
-        public void Shoot(InputState input, Weapon weapon, GameTime gameTime, List<Missile> missiles)
+        public void Shoot(ScreenManager screenManager, InputState input, Weapon weapon, GameTime gameTime, List<Missile> missiles)
         {
             if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency)
             {
                 timeLastShot = new TimeSpan(gameTime.TotalGameTime.Days, gameTime.TotalGameTime.Hours, gameTime.TotalGameTime.Minutes, gameTime.TotalGameTime.Seconds, gameTime.TotalGameTime.Milliseconds);
-                missiles.Add(Missile.FromWeapon(weapon,position,new Vector2(input.CurrentMouseState.X,input.CurrentMouseState.Y),timeLastShot,Faction.Fighters));
+                missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + position.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + position.Y), timeLastShot, Faction.Fighters, gameTime));
+                missiles.Last().Load(screenManager.Game.Content);
             }
         }
 

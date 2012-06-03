@@ -184,14 +184,11 @@ namespace Minifice.GameManagement
 
         }
 
-        #endregion
-
-        #region Metody Publiczne
 
         /// <summary>
         /// Metoda statyczna generujaca cala klase GameManager
         /// </summary>
-        public static GameManager Load(ContentManager content,Difficulty difficulty,ScreenManager screenManager)
+        public static GameManager Load(ContentManager content, Difficulty difficulty, ScreenManager screenManager)
         {
             FileManager fileManager = new FileManager();
             GameManager newInstance = fileManager.Deserialize<GameManager>(@"Missions\Mission1");
@@ -203,7 +200,7 @@ namespace Minifice.GameManagement
                 e.Load(content);
             foreach (Fighter f in newInstance.Fighters)
                 f.Load(content);
-            
+
             newInstance.difficulty = difficulty;
             newInstance.screenManager = screenManager;
             newInstance.MissionId = 1;
@@ -220,26 +217,30 @@ namespace Minifice.GameManagement
             // TU EWENTUALNIE MOŻNA BY DODAC JAKIS KOD NA OKNO WCZYTYWANIA NOWEGO POZIOMU
 
             FileManager fileManager = new FileManager();
-            GameManager newInstance = fileManager.Deserialize<GameManager>(@"Missions\Mission"+missionId);
+            GameManager newInstance = fileManager.Deserialize<GameManager>(@"Missions\Mission" + missionId);
             newInstance.GameMap.Load(content);
             foreach (Enemy e in newInstance.Enemies)
                 e.Load(content);
             foreach (Fighter f in newInstance.Fighters)
                 f.Load(content);
-            
+
             MissionId = missionId;
             GameMap = newInstance.GameMap;
             Fighters = newInstance.Fighters;
             Enemies = newInstance.Enemies;
             Bonuses = newInstance.Bonuses;
-            WeaponsArsenal = new List<DataItem<Weapon,int>>();
+            WeaponsArsenal = new List<DataItem<Weapon, int>>();
             Missiles = new List<Missile>();
-            
+
         }
+
+        #endregion
+
+        #region Metody Publiczne
 
         public void HandleInput(InputState input)
         {
-            if (input.IsNewMouseLeftClick(out MouseCord) || input.IsNewMouseRightClick(out MouseCord))
+            if (input.IsNewMouseLeftClick(out MouseCord) || input.IsNewMouseRightClick(out MouseCord) || input.IsMouseLeftClickHold())
             {
                 // Myszka na interfejsie
                 if (input.CurrentMouseState.X < GameInterface.Width)
@@ -256,11 +257,11 @@ namespace Minifice.GameManagement
                             f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
                         }
                     }
-                    if (input.IsNewMouseLeftClick(out MouseCord))
+                    if (input.IsMouseLeftClickHold())
                     {
                         foreach (Fighter f in Fighters)
                         {
-                            f.Shoot(input, Weapon.Gun, screenManager.GameTime, Missiles);
+                            f.Shoot(screenManager, input, Weapon.Gun, screenManager.GameTime, Missiles);
                         }
                     }
                 }
@@ -281,6 +282,10 @@ namespace Minifice.GameManagement
             {
                 e.Update(gameTime);
                 e.Move(GameMap, Fighters, Enemies);
+            }
+            foreach (Missile m in Missiles)
+            {
+                m.Update(gameTime, GameMap, Fighters, Enemies);
             }
         }
 
