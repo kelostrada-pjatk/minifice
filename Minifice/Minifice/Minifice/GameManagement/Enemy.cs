@@ -22,21 +22,33 @@ namespace Minifice.GameManagement
 
             // Definicja animacji postaci
             this.animation = new Animation(2, 5, Direction.Left);
-            AnimationFrame mini1 = new AnimationFrame(@"Game\mini1", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
-            mini1.origin = new Vector2(100, 180);
-            AnimationFrame mini2 = new AnimationFrame(@"Game\mini2", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
-            mini2.origin = new Vector2(100, 180);
-            this.animation.framesLeft.Add(mini1);
-            this.animation.framesLeft.Add(mini2);
-            this.animation.framesRight.Add(mini1);
-            this.animation.framesRight.Add(mini2);
-            this.animation.framesUp.Add(mini1);
-            this.animation.framesUp.Add(mini2);
-            this.animation.framesDown.Add(mini1);
-            this.animation.framesDown.Add(mini2);
+            AnimationFrame eiti1 = new AnimationFrame(@"Game\eiti1", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            eiti1.origin = new Vector2(100, 180);
+            AnimationFrame eiti2 = new AnimationFrame(@"Game\eiti2", new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+            eiti2.origin = new Vector2(100, 180);
+            this.animation.framesLeft.Add(eiti1);
+            this.animation.framesLeft.Add(eiti2);
+            this.animation.framesRight.Add(eiti1);
+            this.animation.framesRight.Add(eiti2);
+            this.animation.framesUp.Add(eiti1);
+            this.animation.framesUp.Add(eiti2);
+            this.animation.framesDown.Add(eiti1);
+            this.animation.framesDown.Add(eiti2);
 
-            this.animationDeath = new Animation();
+            this.animationDeath = new Animation(20, 15, Direction.Left);
 
+            AnimationFrame frame;
+            for (int i = 1; i <= 10; i++)
+            {
+                frame = new AnimationFrame(@"Game\AnimationDeath\eiti1_klatka" + i.ToString(), new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+                frame.origin = new Vector2(100, 180);
+                if (i==10)
+                    for (int j=0;j<11;j++)
+                        this.animationDeath.framesLeft.Add(frame);
+                else
+                    this.animationDeath.framesLeft.Add(frame);
+            }
+            
             List<Vector2> points = new List<Vector2>();
 
             points.Add(new Vector2(-7, 0));
@@ -46,7 +58,7 @@ namespace Minifice.GameManagement
 
             this.boundaries = Boundaries.CreateFromPoints(points);
             
-            this.health = 2;
+            this.health = 3;
             this.speed = 0.75f;
             this.timeLastShot = new TimeSpan();
 

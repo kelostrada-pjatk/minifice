@@ -79,5 +79,10 @@ namespace Minifice.GameManagement
             foreach (var f in framesRight)
                 f.Load(content);
         }
+
+        public bool IsOver()
+        {
+            return progress == frames - 1;
+        }
     }
 }

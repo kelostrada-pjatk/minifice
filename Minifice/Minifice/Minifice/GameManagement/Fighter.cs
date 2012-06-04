@@ -79,7 +79,19 @@ namespace Minifice.GameManagement
             this.animation.framesDown.Add(mini1);
             this.animation.framesDown.Add(mini2);
 
-            this.animationDeath = new Animation();
+            this.animationDeath = new Animation(20, 15, Direction.Left);
+
+            AnimationFrame frame;
+            for (int i = 1; i <= 10; i++)
+            {
+                frame = new AnimationFrame(@"Game\AnimationDeath\mini1_klatka" + i.ToString(), new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
+                frame.origin = new Vector2(100, 180);
+                if (i == 10)
+                    for (int j = 0; j < 11; j++)
+                        this.animationDeath.framesLeft.Add(frame);
+                else
+                    this.animationDeath.framesLeft.Add(frame);
+            }
 
             List<Vector2> points = new List<Vector2>();
 
@@ -90,7 +102,7 @@ namespace Minifice.GameManagement
 
             this.boundaries = Boundaries.CreateFromPoints(points);
             
-            this.health = 2;
+            this.health = 5;
             this.isActive = true;
             this.speed = 0.95f;
             this.timeLastShot = new TimeSpan();
@@ -112,7 +124,7 @@ namespace Minifice.GameManagement
         
         public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-            if (moveStrategy != null)
+            if (moveStrategy != null && !isDying)
                 return moveStrategy.Move(currentTime);
 
             return null;
@@ -120,7 +132,7 @@ namespace Minifice.GameManagement
 
         public void Shoot(ScreenManager screenManager, InputState input, Weapon weapon, GameTime gameTime, List<Missile> missiles)
         {
-            if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency)
+            if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency && !isDying)
             {
                 timeLastShot = new TimeSpan(gameTime.TotalGameTime.Days, gameTime.TotalGameTime.Hours, gameTime.TotalGameTime.Minutes, gameTime.TotalGameTime.Seconds, gameTime.TotalGameTime.Milliseconds);
                 missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + camera.Pos.Y), timeLastShot, Faction.Fighters, gameTime));
@@ -130,8 +142,12 @@ namespace Minifice.GameManagement
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
             animation.Draw(spriteBatch, position, position.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
+        }
+
+        public override void Die()
+        {
+            base.Die();
         }
 
         #endregion
