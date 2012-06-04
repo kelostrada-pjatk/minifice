@@ -6,31 +6,45 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Minifice.Enums;
 using Microsoft.Xna.Framework.Content;
+using Minifice.GameManagement.Movement;
 
 namespace Minifice.GameManagement.Shooting
 {
     class Gun : Missile
     {
         Texture2D bullet;
+        int r = 25; // rozrzut nabojow przy strzelaniu
 
         public Gun(Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction, GameTime gameTime)
         {
             power = 1;
-            range = 250f;
-            speed = 2.5f;
-            position = new Vector2(start.X,start.Y);
+            range = 350f;
+            speed = 3.5f;
+            position = new Vector2(start.X, start.Y);
             this.start = new Vector2(start.X, start.Y);
 
-            float s = speed * (gameTime.ElapsedGameTime.Ticks) * 0.00001f;
+            this.target = new Vector2(target.X - start.X, target.Y - start.Y);
+
+            if (this.target != Vector2.Zero)
+            {
+                this.target.Normalize();
+                this.target *= range;
+                this.target += this.start;
+                // Jakaś mała randomizacja przy strzelaniu
+                Random rand = new Random();
+                this.target += new Vector2(rand.Next(-r, r), rand.Next(-r, r));
+            }
+
+            //double s = Math.Sqrt(Math.Pow(this.target.X - this.start.X, 2) + Math.Pow(this.target.Y - this.start.Y, 2));
 
 
-            this.target = new Vector2(target.X, target.Y);
             List<Vector2> points = new List<Vector2>();
             points.Add(Vector2.Zero);
             Vector2 v = new Vector2(target.X - start.X, target.Y - start.Y);
             if (v != Vector2.Zero)
             {
                 v.Normalize();
+                v *= 5;
                 points.Add(v);
             }
             boundaries = Boundaries.CreateFromPoints(points);
@@ -48,9 +62,29 @@ namespace Minifice.GameManagement.Shooting
             spriteBatch.Draw(bullet, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1);
         }
 
-        public override void Update(GameTime gameTime, GameMap gameMap, List<Fighter> fighter, List<Enemy> enemy)
+        public override bool Update(GameTime gameTime, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
+            float s = speed * (gameTime.ElapsedGameTime.Ticks) * 0.00001f;
 
+            Vector2 shift = new Vector2(target.X - position.X, target.Y - position.Y);
+
+            if (shift != Vector2.Zero)
+                shift.Normalize();
+            shift *= s;
+
+            if ((position + shift).Similar(target, s)) return true;
+
+            position += shift;
+
+            if (Collision(gameMap,fighters,enemies) != null)
+            {
+                return true;
+            }
+
+            return false;
         }
+        
+        
+        
     }
 }

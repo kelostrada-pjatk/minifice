@@ -26,7 +26,10 @@ namespace Minifice.GameManagement
         public Vector2 position;
         protected GameTime currentTime;
         protected TimeSpan timeLastMoved = new TimeSpan(0);
-        public static float shotFrequency = 1.1f;
+        public static float shotFrequency = 0.4f;
+        protected readonly Camera2d camera;
+        protected int health;
+
         #endregion
 
         #region Właściwości
@@ -49,6 +52,11 @@ namespace Minifice.GameManagement
         public Unit()
         {
 
+        }
+
+        public Unit(Camera2d camera)
+        {
+            this.camera = camera;
         }
 
         #endregion

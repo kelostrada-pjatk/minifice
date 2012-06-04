@@ -20,8 +20,9 @@ namespace Minifice.GameManagement
 
         bool playerControlled;
         bool isActive;
-        int health;
+        
         Vector2 destination;
+        
 
         #endregion
 
@@ -57,7 +58,8 @@ namespace Minifice.GameManagement
 
         #region Inicjalizacja
 
-        public Fighter(bool playerControlled, Vector2 position)
+        public Fighter(bool playerControlled, Vector2 position, Camera2d camera)
+            : base(camera)
         {
             this.playerControlled = playerControlled;
             this.position = position;
@@ -90,10 +92,11 @@ namespace Minifice.GameManagement
             
             this.health = 2;
             this.isActive = true;
-            this.speed = 0.55f;
+            this.speed = 0.95f;
             this.timeLastShot = new TimeSpan();
 
             this.destination = new Vector2(position.X, position.Y);
+
         }
 
         #endregion
@@ -103,7 +106,7 @@ namespace Minifice.GameManagement
         public void Move(Vector2 resolution, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
         {
             if (playerControlled)
-                Destination = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + position.X, input.CurrentMouseState.Y - resolution.Y / 2 + position.Y);
+                Destination = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - resolution.Y / 2 + camera.Pos.Y);
         }
 
         
@@ -120,7 +123,7 @@ namespace Minifice.GameManagement
             if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency)
             {
                 timeLastShot = new TimeSpan(gameTime.TotalGameTime.Days, gameTime.TotalGameTime.Hours, gameTime.TotalGameTime.Minutes, gameTime.TotalGameTime.Seconds, gameTime.TotalGameTime.Milliseconds);
-                missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + position.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + position.Y), timeLastShot, Faction.Fighters, gameTime));
+                missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + camera.Pos.Y), timeLastShot, Faction.Fighters, gameTime));
                 missiles.Last().Load(screenManager.Game.Content);
             }
         }
