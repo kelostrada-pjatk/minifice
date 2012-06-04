@@ -154,23 +154,23 @@ namespace Minifice.GameManagement
             for (int i = 0; i < 50; i++)
                 GameMap.mapTiles[i][10].mapObjects.Add(mo);
 
-            Fighter a = new Fighter(true, new Vector2(200f,200f));
+            Fighter a = new Fighter(true, new Vector2(70f,70f), camera);
             a.Load(content);
             a.moveStrategy = new GotoPoint(GameMap, Fighters, Enemies, a);
-            
-            Fighter b = new Fighter(false, new Vector2(60f,60f));
+
+            Fighter b = new Fighter(false, new Vector2(60f, 60f), camera);
             b.Load(content);
             b.moveStrategy = new Follow(GameMap, Fighters, Enemies, b, a);
 
-            Fighter c = new Fighter(false, new Vector2(50f, 50f));
+            Fighter c = new Fighter(false, new Vector2(50f, 50f), camera);
             c.Load(content);
             c.moveStrategy = new Follow(GameMap, Fighters, Enemies, c, b);
 
-            Fighter d = new Fighter(false, new Vector2(40f, 40f));
+            Fighter d = new Fighter(false, new Vector2(40f, 40f), camera);
             d.Load(content);
             d.moveStrategy = new Follow(GameMap, Fighters, Enemies, d, c);
 
-            Fighter e = new Fighter(false, new Vector2(30f, 30f));
+            Fighter e = new Fighter(false, new Vector2(30f, 30f), camera);
             e.Load(content);
             e.moveStrategy = new Follow(GameMap, Fighters, Enemies, e, d);
 
@@ -181,6 +181,11 @@ namespace Minifice.GameManagement
             Fighters.Add(e);
 
             camera.Pos = a.position;
+
+            Enemy A = new Enemy(new Vector2(300f, 30f), camera);
+            A.Load(content);
+
+            Enemies.Add(A);
 
         }
 
@@ -283,9 +288,15 @@ namespace Minifice.GameManagement
                 e.Update(gameTime);
                 e.Move(GameMap, Fighters, Enemies);
             }
-            foreach (Missile m in Missiles)
+            int c = Missiles.Count;
+            for (int i = 0; i < c; i++)
             {
-                m.Update(gameTime, GameMap, Fighters, Enemies);
+                if (Missiles[i].Update(gameTime, GameMap, Fighters, Enemies))
+                {
+                    Missiles.RemoveAt(i);
+                    i--;
+                    c--;
+                }
             }
         }
 

@@ -143,6 +143,7 @@ namespace Minifice.GameManagement
 
             return boundaries;
         }
+
     }
 
     public class Function
