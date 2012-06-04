@@ -119,6 +119,122 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\eiti1.png">
+      <Name>eiti1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka1.png">
+      <Name>eiti1_klatka1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka10.png">
+      <Name>eiti1_klatka10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka2.png">
+      <Name>eiti1_klatka2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka3.png">
+      <Name>eiti1_klatka3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka4.png">
+      <Name>eiti1_klatka4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka5.png">
+      <Name>eiti1_klatka5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka6.png">
+      <Name>eiti1_klatka6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka7.png">
+      <Name>eiti1_klatka7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka8.png">
+      <Name>eiti1_klatka8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\eiti1_klatka9.png">
+      <Name>eiti1_klatka9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka1.png">
+      <Name>mini1_klatka1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka10.png">
+      <Name>mini1_klatka10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka2.png">
+      <Name>mini1_klatka2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka3.png">
+      <Name>mini1_klatka3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka4.png">
+      <Name>mini1_klatka4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka5.png">
+      <Name>mini1_klatka5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka6.png">
+      <Name>mini1_klatka6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka7.png">
+      <Name>mini1_klatka7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka8.png">
+      <Name>mini1_klatka8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Game\AnimationDeath\mini1_klatka9.png">
+      <Name>mini1_klatka9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\eiti2.png">
+      <Name>eiti2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

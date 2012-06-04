@@ -76,8 +76,14 @@ namespace Minifice.GameManagement.Shooting
 
             position += shift;
 
-            if (Collision(gameMap,fighters,enemies) != null)
+            Object colide;
+
+            if ((colide = Collision(gameMap,fighters,enemies)) != null)
             {
+                if (colide is Enemy || colide is Fighter)
+                {
+                    ((Unit)colide).Die();
+                }
                 return true;
             }
 

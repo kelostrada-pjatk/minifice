@@ -276,19 +276,39 @@ namespace Minifice.GameManagement
 
         public void Update(GameTime gameTime)
         {
-            foreach (Fighter f in Fighters)
+            int c = Fighters.Count;
+            for (int i = 0; i < c; i++)
             {
-                f.Update(gameTime);
-                Vector2? pos = f.Move(GameMap, Fighters, Enemies);
-                if (pos != null && f.PlayerControlled)
-                    camera.Pos = (Vector2)pos;
+                if (Fighters[i].Update(gameTime))
+                {
+                    Fighters.RemoveAt(i);
+                    i--;
+                    c--;
+                }
+                else
+                {
+                    Vector2? pos = Fighters[i].Move(GameMap, Fighters, Enemies);
+                    if (pos != null && Fighters[i].PlayerControlled)
+                        camera.Pos = (Vector2)pos;
+                }
             }
-            foreach (Enemy e in Enemies)
+
+            c = Enemies.Count;
+            for (int i = 0; i < c; i++)
             {
-                e.Update(gameTime);
-                e.Move(GameMap, Fighters, Enemies);
+                if (Enemies[i].Update(gameTime))
+                {
+                    Enemies.RemoveAt(i);
+                    i--;
+                    c--;
+                }
+                else
+                {
+                    Enemies[i].Move(GameMap, Fighters, Enemies);
+                }
             }
-            int c = Missiles.Count;
+
+            c = Missiles.Count;
             for (int i = 0; i < c; i++)
             {
                 if (Missiles[i].Update(gameTime, GameMap, Fighters, Enemies))

@@ -29,6 +29,7 @@ namespace Minifice.GameManagement
         public static float shotFrequency = 0.4f;
         protected readonly Camera2d camera;
         protected int health;
+        protected bool isDying = false;
 
         #endregion
 
@@ -67,9 +68,25 @@ namespace Minifice.GameManagement
         
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public void Update(GameTime gameTime)
+        public virtual void Die()
+        {
+            if (health > 0)
+                health--;
+            if (!isDying && health == 0)
+            {
+                animation = animationDeath;
+                isDying = true;
+            }
+        }
+
+        public bool Update(GameTime gameTime)
         {
             currentTime = gameTime;
+
+            if (isDying)
+                animationDeath.Update(Direction.Left, gameTime);
+
+            return (isDying && animation.IsOver());
         }
 
         public void Load(ContentManager content)
