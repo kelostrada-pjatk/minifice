@@ -18,7 +18,7 @@ namespace Minifice.GameManagement.Shooting
         public Gun(Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction, GameTime gameTime)
         {
             power = 1;
-            range = 350f;
+            range = 300f;
             speed = 3.5f;
             position = new Vector2(start.X, start.Y);
             this.start = new Vector2(start.X, start.Y);
