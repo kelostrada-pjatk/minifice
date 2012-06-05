@@ -76,7 +76,7 @@ namespace Minifice.GameManagement
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 location, float layerDepth)
         {
             if (texture != null)
-                if (destination.Width != 0)
+                if (destination.Width != 0 || destination.Height != 0)
                     spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, destination.Width + 1, destination.Height + 1), source, Color.White, 0, origin, SpriteEffects.None, layerDepth);
                 else
                     spriteBatch.Draw(texture, new Rectangle((int)location.X, (int)location.Y, source.Width + 1, source.Height + 1), source, Color.White, 0, origin, SpriteEffects.None, layerDepth);

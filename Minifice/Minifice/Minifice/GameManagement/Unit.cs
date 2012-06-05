@@ -46,6 +46,11 @@ namespace Minifice.GameManagement
             return new Vector2(i, j);
         }
 
+        public bool IsAlive
+        {
+            get { return health > 0; }
+        }
+
         #endregion
 
         #region Inicjalizacja

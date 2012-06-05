@@ -17,6 +17,7 @@ namespace Minifice.GameManagement
         #region Pola
 
         bool aware = false;
+        Fighter target;
 
         #endregion
 
@@ -92,6 +93,16 @@ namespace Minifice.GameManagement
             return null;
         }
 
+        public void Shoot(ScreenManager screenManager, Weapon weapon, GameTime gameTime, List<Missile> missiles)
+        {
+            if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency && !isDying && aware)
+            {
+                timeLastShot = new TimeSpan(gameTime.TotalGameTime.Days, gameTime.TotalGameTime.Hours, gameTime.TotalGameTime.Minutes, gameTime.TotalGameTime.Seconds, gameTime.TotalGameTime.Milliseconds);
+                missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(target.position.X, target.position.Y), timeLastShot, Faction.Enemies, gameTime));
+                missiles.Last().Load(screenManager.Game.Content);
+            }
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             animation.Draw(spriteBatch, position, position.Y / (GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
@@ -102,15 +113,17 @@ namespace Minifice.GameManagement
             
             foreach (var f in fighters)
             {
+                if (!f.IsAlive) continue;
 
                 List<Vector2> points = new List<Vector2>();
                 points.Add(Vector2.Zero);
                 Vector2 v = new Vector2(f.position.X - position.X, f.position.Y - position.Y);
-                points.Add(new Vector2(v.X,v.Y));
-                boundaries = Boundaries.CreateFromPoints(points);
-
                 if (v != Vector2.Zero)
                     v.Normalize();
+                points.Add(new Vector2(20*v.X,20*v.Y));
+                boundaries = Boundaries.CreateFromPoints(points);
+
+                
                 Vector2 current = new Vector2(position.X, position.Y);
                 bool intersects = false;
                 int i = 0, j = 0;
@@ -120,7 +133,7 @@ namespace Minifice.GameManagement
                     j = (int)current.GetMapPosition(gameMap).Y;
 
                     foreach (var mo in gameMap.mapTiles[i][j].mapObjects)
-                        if ((mo.boundaries + new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2)).Intersects(boundaries + position))
+                        if ((mo.boundaries + new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2)).Intersects(boundaries + current))
                             intersects = true;
 
                     if (intersects)
@@ -133,6 +146,7 @@ namespace Minifice.GameManagement
                 {
                     aware = true;
                     this.moveStrategy = new PathFind(gameMap, fighters, enemies, this, f);
+                    target = f;
                     break;
                 }
 
