@@ -13,7 +13,7 @@ namespace Minifice.GameManagement.Shooting
     class Gun : Missile
     {
         Texture2D bullet;
-        int r = 25; // rozrzut nabojow przy strzelaniu
+        int r = 45; // rozrzut nabojow przy strzelaniu
 
         public Gun(Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction, GameTime gameTime)
         {
@@ -82,7 +82,8 @@ namespace Minifice.GameManagement.Shooting
             {
                 if (colide is Enemy || colide is Fighter)
                 {
-                    ((Unit)colide).Die(fighters);
+                    if (((Unit)colide).IsAlive)
+                        ((Unit)colide).Die(fighters);
                 }
                 return true;
             }

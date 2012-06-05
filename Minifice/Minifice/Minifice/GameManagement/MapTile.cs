@@ -36,7 +36,8 @@ namespace Minifice.GameManagement
 
         internal void Load(ContentManager content)
         {
-            backgroundSprite.Load(content);
+            if (backgroundSprite != null)
+                backgroundSprite.Load(content);
             foreach (MapObject mo in mapObjects)
                 mo.Load(content);
         }
@@ -46,7 +47,8 @@ namespace Minifice.GameManagement
         internal void Draw(SpriteBatch spriteBatch, Vector2 point)
         {
             float layerDepth = point.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.001f;
-            backgroundSprite.Draw(spriteBatch, point, 0);
+            if (backgroundSprite != null)
+                backgroundSprite.Draw(spriteBatch, point, 0);
             foreach (MapObject mo in mapObjects)
                 mo.Draw(spriteBatch, point, layerDepth);
         }

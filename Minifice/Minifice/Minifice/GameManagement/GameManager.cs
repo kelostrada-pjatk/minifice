@@ -90,15 +90,9 @@ namespace Minifice.GameManagement
             //int tileCount = 50;
             //camera.Zoom = screenManager.Settings.Resolution.Y / tileCount / GameMap.TileShift.Y * 2;
             
-            GameMap = new GameMap(50,100);
-            
             content = screenManager.Game.Content;
 
-            for (int i = 0; i < 50; i++)
-                for (int j = 0; j < 100; j++)
-                    GameMap.mapTiles[i][j] = new MapTile(new BackgroundSprite(@"Game\texture", new Rectangle(152, 379, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
-
-            GameMap.Load(content);
+            Level1();
 
             GameInterface = new GameInterface();
             GameInterface.Load(content);
@@ -112,66 +106,25 @@ namespace Minifice.GameManagement
             //FileManager fileManager = new FileManager();
             //fileManager.Serialize<GameManager>(@"mission1", this);
 
-            MapObject mo = new MapObject();
-            List<Vector2> punkty = new List<Vector2>();
-            punkty.Add(new Vector2(1, 6));
-            punkty.Add(new Vector2(4, 13));
-            punkty.Add(new Vector2(8, 13));
-            punkty.Add(new Vector2(25, 0));
-            mo.boundaries = Boundaries.CreateFromPoints(punkty);
-            mo.collectible = false;
-            mo.Source = new Source(372, 429, 30, 38);
-            mo.textureName = @"Game\texture";
-            mo.throwableOver = true;
-            mo.type = new Bonus();
-            mo.viewBlocking = true;
-            mo.origin = new Vector2(0, 24);
-            mo.Load(content);
-
-            for (int i = 0; i < 50; i++)
-            {
-                GameMap.mapTiles[i][10].mapObjects.Add(mo);
-                //GameMap.mapTiles[i][0].mapObjects[i].boundaries += new Vector2(GameMap.TileShift.X * i, 0);
-            }
-
-            mo = new MapObject();
-            punkty.Clear();
-            punkty.Add(new Vector2(40, 13));
-            punkty.Add(new Vector2(43, 13));
-            punkty.Add(new Vector2(46, 6));
-            punkty.Add(new Vector2(25, 0));
-            //punkty.Add(new Vector2(18, 2));
-            mo.boundaries = Boundaries.CreateFromPoints(punkty);
-            mo.collectible = false;
-            mo.Source = new Source(403, 429, 30, 38);
-            mo.textureName = @"Game\texture";
-            mo.throwableOver = true;
-            mo.type = new Bonus();
-            mo.viewBlocking = true;
-            mo.origin = new Vector2(-18, 24);
-            mo.Load(content);
             
 
-            for (int i = 0; i < 50; i++)
-                GameMap.mapTiles[i][10].mapObjects.Add(mo);
-
-            Fighter a = new Fighter(true, new Vector2(70f,70f), camera);
+            Fighter a = new Fighter(true, new Vector2(700f,700f), camera);
             a.Load(content);
             a.moveStrategy = new GotoPoint(GameMap, Fighters, Enemies, a);
 
-            Fighter b = new Fighter(false, new Vector2(60f, 60f), camera);
+            Fighter b = new Fighter(false, new Vector2(600f, 600f), camera);
             b.Load(content);
             b.moveStrategy = new Follow(GameMap, Fighters, Enemies, b, a);
 
-            Fighter c = new Fighter(false, new Vector2(50f, 50f), camera);
+            Fighter c = new Fighter(false, new Vector2(500f, 500f), camera);
             c.Load(content);
             c.moveStrategy = new Follow(GameMap, Fighters, Enemies, c, b);
 
-            Fighter d = new Fighter(false, new Vector2(40f, 40f), camera);
+            Fighter d = new Fighter(false, new Vector2(400f, 400f), camera);
             d.Load(content);
             d.moveStrategy = new Follow(GameMap, Fighters, Enemies, d, c);
 
-            Fighter e = new Fighter(false, new Vector2(30f, 30f), camera);
+            Fighter e = new Fighter(false, new Vector2(1000f, 1000f), camera);
             e.Load(content);
             e.moveStrategy = new Follow(GameMap, Fighters, Enemies, e, d);
 
@@ -201,6 +154,103 @@ namespace Minifice.GameManagement
 
             Enemies.Add(A);
 
+        }
+
+        private void Level1()
+        {
+            GameMap = new GameMap(150, 150);
+
+            MapTile t1 = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            MapTile t2 = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 291, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            MapTile t3 = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 317, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            MapObject mo = new MapObject();
+            List<Vector2> punkty = new List<Vector2>();
+            punkty.Add(new Vector2(0, 11));
+            punkty.Add(new Vector2(24, 23));
+            punkty.Add(new Vector2(48, 11));
+            punkty.Add(new Vector2(24, 0));
+
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.boundaries += new Vector2(0, 12);
+            mo.collectible = false;
+            mo.Source = new Source(539, 0, 48, 47);
+            mo.textureName = @"Game\newtile";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(0, 24);
+            mo.Load(content);
+
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 40; j++)
+                {
+                    GameMap[i + j / 2, 40 - 2 * i + j] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+                    GameMap[i + j / 2 + 1, 40 - 2 * i + j] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 291, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+                }
+            }
+
+            for (int i = 0; i < 42; i++)
+            {
+                GameMap[i / 2, 42 - i].mapObjects.Add(mo);
+                GameMap[i / 2 + 20, 82 - i].mapObjects.Add(mo);
+            }
+
+            GameMap[0, 43].mapObjects.Add(mo);
+            GameMap[1, 44].mapObjects.Add(mo);
+
+
+            GameMap.Load(content);
+
+            /*
+            GameMap = new GameMap(50, 100);
+
+            for (int i = 0; i < 50; i++)
+                for (int j = 0; j < 100; j++)
+                    GameMap.mapTiles[i][j] = new MapTile(new BackgroundSprite(@"Game\texture", new Rectangle(152, 379, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+
+            GameMap.Load(content);
+
+            MapObject mo = new MapObject();
+            List<Vector2> punkty = new List<Vector2>();
+            punkty.Add(new Vector2(1, 6));
+            punkty.Add(new Vector2(4, 13));
+            punkty.Add(new Vector2(8, 13));
+            punkty.Add(new Vector2(25, 0));
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.collectible = false;
+            mo.Source = new Source(372, 429, 30, 38);
+            mo.textureName = @"Game\texture";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(0, 24);
+            mo.Load(content);
+
+            for (int i = 0; i < 50; i++)
+                GameMap.mapTiles[i][10].mapObjects.Add(mo);
+
+            mo = new MapObject();
+            punkty.Clear();
+            punkty.Add(new Vector2(40, 13));
+            punkty.Add(new Vector2(43, 13));
+            punkty.Add(new Vector2(46, 6));
+            punkty.Add(new Vector2(25, 0));
+            //punkty.Add(new Vector2(18, 2));
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.collectible = false;
+            mo.Source = new Source(403, 429, 30, 38);
+            mo.textureName = @"Game\texture";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(-18, 24);
+            mo.Load(content);
+
+
+            for (int i = 0; i < 50; i++)
+                GameMap.mapTiles[i][10].mapObjects.Add(mo);
+            */
         }
 
 
@@ -339,6 +389,7 @@ namespace Minifice.GameManagement
                 {
                     Enemies[i].Move(GameMap, Fighters, Enemies);
                     Enemies[i].Notice(GameMap, Fighters, Enemies);
+                    Enemies[i].Shoot(screenManager, Weapon.Gun, gameTime, Missiles);
                 }
             }
 
@@ -386,7 +437,7 @@ namespace Minifice.GameManagement
 
             GameInterface.Draw(spriteBatch);
             //Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + GameInterface.Width - Fighters[0].position.X, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y);
-            /*Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 );
+            Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 );
             posClick += Fighters[0].position;
 
             spriteBatch.DrawString(font, (MouseCord.X-GameInterface.Width).ToString() + "," + MouseCord.Y.ToString(), new Vector2(10,0), Color.Red);
@@ -397,7 +448,9 @@ namespace Minifice.GameManagement
 
 
             spriteBatch.DrawString(font, "{" + i.ToString() + "," + j.ToString() + "}", new Vector2(10, 150), Color.Purple);
-            */
+
+            spriteBatch.DrawString(font, "{" + posClick.GetMapPosition(GameMap).X + "," + posClick.GetMapPosition(GameMap).Y + "}", new Vector2(10, 200), Color.Plum);
+            
 
 
             spriteBatch.End();

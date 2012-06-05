@@ -29,11 +29,7 @@ namespace Minifice.GameManagement
 
         #region Właściwości
 
-        [XmlIgnore]
-        public bool IsAlive
-        {
-            get { return health > 0;     }
-        }
+        
 
         [XmlIgnore]
         public Vector2 Destination
