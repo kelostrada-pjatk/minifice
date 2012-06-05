@@ -26,7 +26,7 @@ namespace Minifice.GameManagement
             get
             {
                 if (i < 0) i = 0;
-                if (i > width) i = width - 1;
+                if (i > width - 1) i = width - 1;
                 if (j < 0) j = 0;
                 if (j > height - 1) j = height - 1;
                 return mapTiles[i][j];

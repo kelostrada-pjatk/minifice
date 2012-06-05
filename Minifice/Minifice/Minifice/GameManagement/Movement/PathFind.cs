@@ -10,7 +10,7 @@ namespace Minifice.GameManagement.Movement
     public class PathFind : MoveStrategy
     {
         Unit destination;
-        float distance = 300f;
+        float distance = 230f;
 
         public PathFind()
             : base()
