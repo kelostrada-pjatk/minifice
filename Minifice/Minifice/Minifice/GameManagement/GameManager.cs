@@ -112,19 +112,19 @@ namespace Minifice.GameManagement
             a.Load(content);
             a.moveStrategy = new GotoPoint(GameMap, Fighters, Enemies, a);
 
-            Fighter b = new Fighter(false, new Vector2(600f, 600f), camera);
+            Fighter b = new Fighter(false, new Vector2(730f, 730f), camera);
             b.Load(content);
             b.moveStrategy = new Follow(GameMap, Fighters, Enemies, b, a);
 
-            Fighter c = new Fighter(false, new Vector2(500f, 500f), camera);
+            Fighter c = new Fighter(false, new Vector2(760f, 760f), camera);
             c.Load(content);
             c.moveStrategy = new Follow(GameMap, Fighters, Enemies, c, b);
 
-            Fighter d = new Fighter(false, new Vector2(400f, 400f), camera);
+            Fighter d = new Fighter(false, new Vector2(790f, 790f), camera);
             d.Load(content);
             d.moveStrategy = new Follow(GameMap, Fighters, Enemies, d, c);
 
-            Fighter e = new Fighter(false, new Vector2(1000f, 1000f), camera);
+            Fighter e = new Fighter(false, new Vector2(820f, 820f), camera);
             e.Load(content);
             e.moveStrategy = new Follow(GameMap, Fighters, Enemies, e, d);
 
@@ -158,6 +158,7 @@ namespace Minifice.GameManagement
 
         private void Level1()
         {
+            
             GameMap = new GameMap(150, 150);
 
             MapTile t1 = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
@@ -201,7 +202,7 @@ namespace Minifice.GameManagement
 
 
             GameMap.Load(content);
-
+            
             /*
             GameMap = new GameMap(50, 100);
 

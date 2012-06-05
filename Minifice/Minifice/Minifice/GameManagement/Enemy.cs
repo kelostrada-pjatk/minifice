@@ -132,7 +132,7 @@ namespace Minifice.GameManagement
                     i = (int)current.GetMapPosition(gameMap).X;
                     j = (int)current.GetMapPosition(gameMap).Y;
 
-                    foreach (var mo in gameMap.mapTiles[i][j].mapObjects)
+                    foreach (var mo in gameMap[i,j].mapObjects)
                         if ((mo.boundaries + new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2)).Intersects(boundaries + current))
                             intersects = true;
 
