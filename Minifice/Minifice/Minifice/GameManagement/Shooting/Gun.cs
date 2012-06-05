@@ -82,7 +82,7 @@ namespace Minifice.GameManagement.Shooting
             {
                 if (colide is Enemy || colide is Fighter)
                 {
-                    ((Unit)colide).Die();
+                    ((Unit)colide).Die(fighters);
                 }
                 return true;
             }

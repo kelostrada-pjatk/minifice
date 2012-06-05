@@ -10,6 +10,7 @@ using Minifice.ScreenManagement;
 using System.Xml.Serialization;
 using Minifice.Enums;
 using Minifice.GameManagement.Shooting;
+using Minifice.GameManagement.Movement;
 #endregion
 
 namespace Minifice.GameManagement
@@ -88,9 +89,19 @@ namespace Minifice.GameManagement
                 frame.origin = new Vector2(100, 180);
                 if (i == 10)
                     for (int j = 0; j < 11; j++)
+                    {
                         this.animationDeath.framesLeft.Add(frame);
+                        this.animationDeath.framesRight.Add(frame);
+                        this.animationDeath.framesUp.Add(frame);
+                        this.animationDeath.framesDown.Add(frame);
+                    }
                 else
+                {
                     this.animationDeath.framesLeft.Add(frame);
+                    this.animationDeath.framesRight.Add(frame);
+                    this.animationDeath.framesUp.Add(frame);
+                    this.animationDeath.framesDown.Add(frame);
+                }
             }
 
             List<Vector2> points = new List<Vector2>();
@@ -117,7 +128,7 @@ namespace Minifice.GameManagement
 
         public void Move(Vector2 resolution, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, InputState input)
         {
-            if (playerControlled)
+            if (playerControlled && !isDying)
                 Destination = new Vector2(input.CurrentMouseState.X - GameInterface.Width - (resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - resolution.Y / 2 + camera.Pos.Y);
         }
 
@@ -145,9 +156,51 @@ namespace Minifice.GameManagement
             animation.Draw(spriteBatch, position, position.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
         }
 
-        public override void Die()
+        public override void Die(List<Fighter> fighters)
         {
-            base.Die();
+            base.Die(fighters);
+            
+            if (isDying)
+            {
+                for (int i = 0; i < fighters.Count; i++)
+                {
+                    if (fighters[i].Equals(this))
+                    {
+                        if (fighters[i].PlayerControlled)
+                        {
+                            bool b = false;
+                            foreach (var f in fighters)
+                            {
+                                if (!f.Equals(this) && f.IsAlive && !f.isDying)
+                                {
+                                    this.PlayerControlled = false;
+                                    
+                                    f.PlayerControlled = true;
+                                    f.moveStrategy = moveStrategy;
+                                    f.moveStrategy.unit = f;
+                                    f.Destination = this.Destination;
+                                    this.moveStrategy = null;
+                                    this.Destination = this.position;
+                                    b = true;
+                                }
+                                if (b) break;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var f in fighters)
+                            {
+                                if (f.moveStrategy is Follow)
+                                    if (((Follow)f.moveStrategy).destination.Equals(this))
+                                    {
+                                        ((Follow)f.moveStrategy).destination = ((Follow)this.moveStrategy).destination;
+                                    }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         #endregion
