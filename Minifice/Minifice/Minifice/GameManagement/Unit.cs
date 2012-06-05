@@ -68,7 +68,7 @@ namespace Minifice.GameManagement
         
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public virtual void Die()
+        public virtual void Die(List<Fighter> fighters)
         {
             if (health > 0)
                 health--;

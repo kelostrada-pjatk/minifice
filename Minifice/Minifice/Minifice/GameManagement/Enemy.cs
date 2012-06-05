@@ -42,11 +42,21 @@ namespace Minifice.GameManagement
             {
                 frame = new AnimationFrame(@"Game\AnimationDeath\eiti1_klatka" + i.ToString(), new Rectangle(0, 0, 200, 200), new Rectangle(0, 0, 40, 40));
                 frame.origin = new Vector2(100, 180);
-                if (i==10)
-                    for (int j=0;j<11;j++)
+                if (i == 10)
+                    for (int j = 0; j < 11; j++)
+                    {
                         this.animationDeath.framesLeft.Add(frame);
+                        this.animationDeath.framesRight.Add(frame);
+                        this.animationDeath.framesUp.Add(frame);
+                        this.animationDeath.framesDown.Add(frame);
+                    }
                 else
+                {
                     this.animationDeath.framesLeft.Add(frame);
+                    this.animationDeath.framesRight.Add(frame);
+                    this.animationDeath.framesUp.Add(frame);
+                    this.animationDeath.framesDown.Add(frame);
+                }
             }
             
             List<Vector2> points = new List<Vector2>();
@@ -68,6 +78,9 @@ namespace Minifice.GameManagement
 
         public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
+            if (moveStrategy != null && !isDying)
+                return moveStrategy.Move(currentTime);
+
             return null;
         }
 

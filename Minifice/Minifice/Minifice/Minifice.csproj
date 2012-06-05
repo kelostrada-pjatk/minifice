@@ -135,12 +135,14 @@
     <Compile Include="GameManagement\Movement\Follow.cs" />
     <Compile Include="GameManagement\Movement\GameMapToGraphExtender.cs" />
     <Compile Include="GameManagement\Movement\MoveStrategy.cs" />
+    <Compile Include="GameManagement\Movement\Patrol.cs" />
     <Compile Include="GameManagement\Movement\Vector2Extender.cs" />
     <Compile Include="GameManagement\PanelSprite.cs" />
     <Compile Include="GameManagement\Shooting\Gun.cs" />
     <Compile Include="GameManagement\Shooting\Missile.cs" />
     <Compile Include="GameManagement\Sprite.cs" />
     <Compile Include="GameManagement\Unit.cs" />
+    <Compile Include="GameScreens\LostGameScreen.cs" />
     <Compile Include="MenuScreens\LoadingScreen.cs" />
     <Compile Include="GameScreens\GameplayScreen.cs" />
     <Compile Include="MenuScreens\NewGameMenuScreen.cs" />
