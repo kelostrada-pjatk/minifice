@@ -8,12 +8,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Minifice.ScreenManagement;
 using Minifice.Enums;
 using Minifice.GameManagement.Shooting;
-
+using Minifice.GameManagement.Movement;
 
 namespace Minifice.GameManagement
 {
     public class Enemy : Unit
     {
+        #region Pola
+
+        bool aware = false;
+
+        #endregion
+
         #region Inicjalizacja
 
         public Enemy(Vector2 position, Camera2d camera) : base(camera)
@@ -68,13 +74,15 @@ namespace Minifice.GameManagement
 
             this.boundaries = Boundaries.CreateFromPoints(points);
             
-            this.health = 3;
+            this.health = 6;
             this.speed = 0.75f;
             this.timeLastShot = new TimeSpan();
 
         }
 
         #endregion
+
+        #region Metody publiczne
 
         public override Vector2? Move(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
@@ -88,5 +96,52 @@ namespace Minifice.GameManagement
         {
             animation.Draw(spriteBatch, position, position.Y / (GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
         }
+
+        public void Notice(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
+        {
+            
+            foreach (var f in fighters)
+            {
+
+                List<Vector2> points = new List<Vector2>();
+                points.Add(Vector2.Zero);
+                Vector2 v = new Vector2(f.position.X - position.X, f.position.Y - position.Y);
+                points.Add(new Vector2(v.X,v.Y));
+                boundaries = Boundaries.CreateFromPoints(points);
+
+                if (v != Vector2.Zero)
+                    v.Normalize();
+                Vector2 current = new Vector2(position.X, position.Y);
+                bool intersects = false;
+                int i = 0, j = 0;
+                while (!current.Similar(f.position, 5) && i>= 0 && j>=0)
+                {
+                    i = (int)current.GetMapPosition(gameMap).X;
+                    j = (int)current.GetMapPosition(gameMap).Y;
+
+                    foreach (var mo in gameMap.mapTiles[i][j].mapObjects)
+                        if ((mo.boundaries + new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2)).Intersects(boundaries + position))
+                            intersects = true;
+
+                    if (intersects)
+                        break;
+
+                    current += v * 5;
+                }
+
+                if (!intersects)
+                {
+                    aware = true;
+                    this.moveStrategy = new PathFind(gameMap, fighters, enemies, this, f);
+                    break;
+                }
+
+                
+                
+            }
+            
+        }
+
+        #endregion
     }
 }

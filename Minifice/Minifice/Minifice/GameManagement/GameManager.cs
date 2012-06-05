@@ -183,9 +183,21 @@ namespace Minifice.GameManagement
 
             camera.Pos = a.position;
 
-            Enemy A = new Enemy(new Vector2(300f, 30f), camera);
+            Enemy A = new Enemy(new Vector2(300f, 230f), camera);
             A.Load(content);
-            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(230f, 20f), new Vector2(470f, 80f), 2);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(230f, 220f), new Vector2(470f, 280f), 1.4f);
+
+            Enemies.Add(A);
+
+            A = new Enemy(new Vector2(400f, 330f), camera);
+            A.Load(content);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(330f, 320f), new Vector2(570f, 380f), 1.7f);
+
+            Enemies.Add(A);
+
+            A = new Enemy(new Vector2(100f, 250f), camera);
+            A.Load(content);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(400f, 220f), new Vector2(100f, 500f), 2.3f);
 
             Enemies.Add(A);
 
@@ -261,14 +273,16 @@ namespace Minifice.GameManagement
                     {
                         foreach (Fighter f in Fighters)
                         {
-                            f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
+                            if ((!f.IsAlive && f.isDying) || f.IsAlive)
+                                f.Move(screenManager.Settings.Resolution, GameMap, Fighters, Enemies, input);
                         }
                     }
                     if (input.IsMouseLeftClickHold())
                     {
                         foreach (Fighter f in Fighters)
                         {
-                            f.Shoot(screenManager, input, Weapon.Gun, screenManager.GameTime, Missiles);
+                            if ((!f.IsAlive && f.isDying) || f.IsAlive)
+                                f.Shoot(screenManager, input, Weapon.Gun, screenManager.GameTime, Missiles);
                         }
                     }
                 }
@@ -286,7 +300,21 @@ namespace Minifice.GameManagement
 
         public void Update(GameTime gameTime)
         {
-            int c = Fighters.Count;
+            int c=0;
+
+            foreach (var f in Fighters)
+            {
+                if (!f.Update(gameTime) && ((!f.IsAlive && f.isDying) || f.IsAlive))
+                {
+                    Vector2? pos = f.Move(GameMap, Fighters, Enemies);
+                    if (pos != null && f.PlayerControlled)
+                        camera.Pos = (Vector2)pos;
+                }
+                else
+                    f.isDying = false;
+                if (f.IsAlive)
+                    c++;
+            }
 
             if (c == 0)
             {
@@ -296,22 +324,6 @@ namespace Minifice.GameManagement
                     LoadingScreen.Load(screenManager, false, new BackgroundScreen(@"Menu\background"), new MainMenuScreen());
                 };
                 screenManager.AddScreen(lgs);
-            }
-
-            for (int i = 0; i < c; i++)
-            {
-                if (Fighters[i].Update(gameTime))
-                {
-                    Fighters.RemoveAt(i);
-                    i--;
-                    c--;
-                }
-                else
-                {
-                    Vector2? pos = Fighters[i].Move(GameMap, Fighters, Enemies);
-                    if (pos != null && Fighters[i].PlayerControlled)
-                        camera.Pos = (Vector2)pos;
-                }
             }
 
             c = Enemies.Count;
@@ -326,6 +338,7 @@ namespace Minifice.GameManagement
                 else
                 {
                     Enemies[i].Move(GameMap, Fighters, Enemies);
+                    Enemies[i].Notice(GameMap, Fighters, Enemies);
                 }
             }
 
@@ -357,7 +370,8 @@ namespace Minifice.GameManagement
 
             GameMap.Draw(gameTime, spriteBatch);
             foreach (Fighter f in Fighters)
-                f.Draw(gameTime, spriteBatch);
+                if ((!f.IsAlive && f.isDying) || f.IsAlive)
+                    f.Draw(gameTime, spriteBatch);
             foreach (Enemy e in Enemies)
                 e.Draw(gameTime, spriteBatch);
             foreach (Missile m in Missiles)

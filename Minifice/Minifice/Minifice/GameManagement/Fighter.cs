@@ -113,7 +113,7 @@ namespace Minifice.GameManagement
 
             this.boundaries = Boundaries.CreateFromPoints(points);
             
-            this.health = 5;
+            this.health = 8;
             this.isActive = true;
             this.speed = 0.95f;
             this.timeLastShot = new TimeSpan();

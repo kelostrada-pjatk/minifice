@@ -11,7 +11,7 @@ namespace Minifice.GameManagement.Movement
     {
         Vector2 point1, point2, direction;
         TimeSpan arrived;
-        int waitTime;
+        float waitTime;
         bool waiting = false;
 
         public Patrol()
@@ -20,7 +20,7 @@ namespace Minifice.GameManagement.Movement
 
         }
 
-        public Patrol(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Unit unit, Vector2 p1, Vector2 p2, int wait)
+        public Patrol(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Unit unit, Vector2 p1, Vector2 p2, float wait)
             : base(gameMap, fighters, enemies, unit)
         {
             point1 = p1;

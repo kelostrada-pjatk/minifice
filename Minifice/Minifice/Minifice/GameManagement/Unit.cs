@@ -26,10 +26,10 @@ namespace Minifice.GameManagement
         public Vector2 position;
         protected GameTime currentTime;
         protected TimeSpan timeLastMoved = new TimeSpan(0);
-        public static float shotFrequency = 0.4f;
+        public static float shotFrequency = 0.7f;
         protected readonly Camera2d camera;
         protected int health;
-        protected bool isDying = false;
+        public bool isDying = false;
 
         #endregion
 
