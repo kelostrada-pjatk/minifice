@@ -136,19 +136,19 @@ namespace Minifice.GameManagement
 
             camera.Pos = a.position;
 
-            Enemy A = new Enemy(new Vector2(300f, 230f), camera);
+            Enemy A = new Enemy(new Vector2(300f, 430f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(230f, 220f), new Vector2(470f, 280f), 1.4f);
 
             Enemies.Add(A);
 
-            A = new Enemy(new Vector2(400f, 330f), camera);
+            A = new Enemy(new Vector2(400f, 930f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(330f, 320f), new Vector2(570f, 380f), 1.7f);
 
             Enemies.Add(A);
 
-            A = new Enemy(new Vector2(100f, 250f), camera);
+            A = new Enemy(new Vector2(400f, 550f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(400f, 220f), new Vector2(100f, 500f), 2.3f);
 

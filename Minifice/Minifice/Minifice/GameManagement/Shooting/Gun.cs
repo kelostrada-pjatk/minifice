@@ -54,12 +54,13 @@ namespace Minifice.GameManagement.Shooting
 
         public override void Load(ContentManager content)
         {
-            bullet = content.Load<Texture2D>(@"Game\bullet");
+            bullet = content.Load<Texture2D>(@"Game\bulletred");
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(bullet, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1);
+            float layerDepth = position.Y / (GameMap.TileShift.Y / 2) * 0.001f + 0.001f;
+            spriteBatch.Draw(bullet, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, layerDepth);
         }
 
         public override bool Update(GameTime gameTime, GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
