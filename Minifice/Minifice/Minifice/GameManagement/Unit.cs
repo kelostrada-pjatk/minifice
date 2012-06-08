@@ -35,17 +35,6 @@ namespace Minifice.GameManagement
 
         #region Właściwości
 
-        public Vector2 GetMapPosition(GameMap gameMap)
-        {
-            int j = (int)Math.Floor((2 * (int)position.Y) / GameMap.TileShift.Y);
-            int i = (int)Math.Floor((int)position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
-            if (i < 0) i = 0;
-            if (i > gameMap.width) i = gameMap.width - 1;
-            if (j < 0) j = 0;
-            if (j > gameMap.height - 1) j = gameMap.height - 1;
-            return new Vector2(i, j);
-        }
-
         public bool IsAlive
         {
             get { return health > 0; }
@@ -76,7 +65,10 @@ namespace Minifice.GameManagement
         public virtual void Die(List<Fighter> fighters)
         {
             if (health > 0)
+            {
                 health--;
+                timeLastShot += TimeSpan.FromSeconds(0.5);
+            }
             if (!isDying && health == 0)
             {
                 animation = animationDeath;

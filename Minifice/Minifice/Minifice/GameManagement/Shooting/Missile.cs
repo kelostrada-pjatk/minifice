@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Minifice.Enums;
 using Microsoft.Xna.Framework.Content;
+using Minifice.GameManagement.Movement;
 
 namespace Minifice.GameManagement.Shooting
 {
@@ -43,25 +44,14 @@ namespace Minifice.GameManagement.Shooting
             return new Gun(start, target, timeStart, faction, gameTime);
         }
 
-        protected Vector2 GetMapPosition(GameMap gameMap)
-        {
-            int j = (int)Math.Floor((2 * (int)position.Y) / GameMap.TileShift.Y);
-            int i = (int)Math.Floor((int)position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
-            if (i < 0) i = 0;
-            if (i > gameMap.width) i = gameMap.width - 1;
-            if (j < 0) j = 0;
-            if (j > gameMap.height - 1) j = gameMap.height - 1;
-            return new Vector2(i, j);
-        }
-
         protected Object Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-            int i = (int)GetMapPosition(gameMap).X;
-            int j = (int)GetMapPosition(gameMap).Y;
-
-            for (int k = -2; k < 3; k++)
+            int i = position.GetMapPosition(gameMap).X;
+            int j = position.GetMapPosition(gameMap).Y;
+            
+            for (int k = -1; k <= 1; k++)
             {
-                for (int l = -2; l < 3; l++)
+                for (int l = -1; l <= 1; l++)
                 {
                     if (i + k >= 0 && j + l >= 0 && i + k < gameMap.width && j + l < gameMap.height)
                     {
@@ -79,6 +69,8 @@ namespace Minifice.GameManagement.Shooting
                     }
                 }
             }
+            
+
 
             Boundaries b;
             List<Vector2> points = new List<Vector2>();

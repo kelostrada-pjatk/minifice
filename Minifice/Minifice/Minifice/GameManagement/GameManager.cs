@@ -136,19 +136,19 @@ namespace Minifice.GameManagement
 
             camera.Pos = a.position;
 
-            Enemy A = new Enemy(new Vector2(300f, 430f), camera);
+            Enemy A = new Enemy(new Vector2(30f, 43f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(230f, 220f), new Vector2(470f, 280f), 1.4f);
 
             Enemies.Add(A);
 
-            A = new Enemy(new Vector2(400f, 930f), camera);
+            A = new Enemy(new Vector2(40f, 23f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(330f, 320f), new Vector2(570f, 380f), 1.7f);
 
             Enemies.Add(A);
 
-            A = new Enemy(new Vector2(400f, 550f), camera);
+            A = new Enemy(new Vector2(40f, 55f), camera);
             A.Load(content);
             A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(400f, 220f), new Vector2(100f, 500f), 2.3f);
 
@@ -166,13 +166,12 @@ namespace Minifice.GameManagement
             MapTile t3 = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 317, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
             MapObject mo = new MapObject();
             List<Vector2> punkty = new List<Vector2>();
-            punkty.Add(new Vector2(0, 11));
+            punkty.Add(new Vector2(-0.5f, 7));
             punkty.Add(new Vector2(24, 23));
-            punkty.Add(new Vector2(48, 11));
-            punkty.Add(new Vector2(24, 0));
+            punkty.Add(new Vector2(48.5f, 7));
+            punkty.Add(new Vector2(24, -2));
 
             mo.boundaries = Boundaries.CreateFromPoints(punkty);
-            mo.boundaries += new Vector2(0, 12);
             mo.collectible = false;
             mo.Source = new Source(539, 0, 48, 47);
             mo.textureName = @"Game\newtile";
@@ -181,7 +180,7 @@ namespace Minifice.GameManagement
             mo.viewBlocking = true;
             mo.origin = new Vector2(0, 24);
             mo.Load(content);
-
+            
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 40; j++)
@@ -196,9 +195,27 @@ namespace Minifice.GameManagement
                 GameMap[i / 2, 42 - i].mapObjects.Add(mo);
                 GameMap[i / 2 + 20, 82 - i].mapObjects.Add(mo);
             }
-
+            
             GameMap[0, 43].mapObjects.Add(mo);
             GameMap[1, 44].mapObjects.Add(mo);
+
+            GameMap[20, 30].mapObjects.Add(mo);
+
+            GameMap[4, 60] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[4, 60].mapObjects.Add(mo);
+            
+            for (int i = 0; i < 70; i++)
+            {
+                GameMap[7, i*5] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            }
+
+
+            GameMap[0, 0] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[1, 1] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[10, 2] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[10, 3] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[13, 2] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
+            GameMap[13, 3] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
 
 
             GameMap.Load(content);
@@ -439,20 +456,20 @@ namespace Minifice.GameManagement
             GameInterface.Draw(spriteBatch);
             //Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + GameInterface.Width - Fighters[0].position.X, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 - Fighters[0].position.Y);
             Vector2 posClick = new Vector2(MouseCord.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2, MouseCord.Y - screenManager.Settings.Resolution.Y / 2 );
-            posClick += Fighters[0].position;
+            posClick += camera.Pos;
 
             spriteBatch.DrawString(font, (MouseCord.X-GameInterface.Width).ToString() + "," + MouseCord.Y.ToString(), new Vector2(10,0), Color.Red);
             spriteBatch.DrawString(font, ((int)posClick.X).ToString() + "," + ((int)posClick.Y).ToString(), new Vector2(10, 50), Color.Red);
             spriteBatch.DrawString(font, ((int)Fighters[0].position.X).ToString() + "," + ((int)Fighters[0].position.Y).ToString(), new Vector2(10, 100), Color.Red);
-            float j = (float)Math.Floor((2 * (int)Fighters[0].position.Y) / GameMap.TileShift.Y);
-            float i = (float)Math.Floor((int)Fighters[0].position.X / GameMap.TileShift.X - ((j % 2 == 1) ? 1 / 2 : 0));
 
-
-            spriteBatch.DrawString(font, "{" + i.ToString() + "," + j.ToString() + "}", new Vector2(10, 150), Color.Purple);
+            spriteBatch.DrawString(font, "{" + camera.Pos.GetMapPosition(GameMap).X + "," + camera.Pos.GetMapPosition(GameMap).Y + "}", new Vector2(10, 150), Color.Purple);
 
             spriteBatch.DrawString(font, "{" + posClick.GetMapPosition(GameMap).X + "," + posClick.GetMapPosition(GameMap).Y + "}", new Vector2(10, 200), Color.Plum);
-            
 
+            spriteBatch.DrawString(font, "{" + Math.Floor(posClick.X * 2 / GameMap.TileShift.X) + "," + Math.Floor(posClick.Y * 2 / GameMap.TileShift.Y) + "}", new Vector2(10, 250), Color.Maroon);
+
+            Vector2 test = new Vector2(47, 3);
+            test.GetMapPosition(GameMap);
 
             spriteBatch.End();
 

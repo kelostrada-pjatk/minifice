@@ -111,7 +111,7 @@ namespace Minifice.GameManagement
             
             this.health = 8;
             this.isActive = true;
-            this.speed = 0.95f;
+            this.speed = 0.75f;
             this.timeLastShot = new TimeSpan();
 
             this.destination = new Vector2(position.X, position.Y);
@@ -142,7 +142,7 @@ namespace Minifice.GameManagement
             if (gameTime.TotalGameTime.TotalSeconds - timeLastShot.TotalSeconds > Unit.shotFrequency && !isDying)
             {
                 timeLastShot = new TimeSpan(gameTime.TotalGameTime.Days, gameTime.TotalGameTime.Hours, gameTime.TotalGameTime.Minutes, gameTime.TotalGameTime.Seconds, gameTime.TotalGameTime.Milliseconds);
-                missiles.Add(Missile.FromWeapon(weapon, position, new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + camera.Pos.Y), timeLastShot, Faction.Fighters, gameTime));
+                missiles.Add(Missile.FromWeapon(weapon, position+new Vector2(0,-20), new Vector2(input.CurrentMouseState.X - GameInterface.Width - (screenManager.Settings.Resolution.X - GameInterface.Width) / 2 + camera.Pos.X, input.CurrentMouseState.Y - screenManager.Settings.Resolution.Y / 2 + camera.Pos.Y), timeLastShot, Faction.Fighters, gameTime));
                 missiles.Last().Load(screenManager.Game.Content);
             }
         }

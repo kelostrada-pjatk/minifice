@@ -13,12 +13,12 @@ namespace Minifice.GameManagement.Shooting
     class Gun : Missile
     {
         Texture2D bullet;
-        int r = 45; // rozrzut nabojow przy strzelaniu
+        int r = 25; // rozrzut nabojow przy strzelaniu
 
         public Gun(Vector2 start, Vector2 target, TimeSpan timeStart, Faction faction, GameTime gameTime)
         {
             power = 1;
-            range = 300f;
+            range = 450f;
             speed = 3.5f;
             position = new Vector2(start.X, start.Y);
             this.start = new Vector2(start.X, start.Y);
@@ -39,13 +39,18 @@ namespace Minifice.GameManagement.Shooting
 
 
             List<Vector2> points = new List<Vector2>();
-            points.Add(Vector2.Zero);
             Vector2 v = new Vector2(target.X - start.X, target.Y - start.Y);
+            points.Add(Vector2.Zero);
             if (v != Vector2.Zero)
             {
                 v.Normalize();
-                v *= 5;
-                points.Add(v);
+                v *= 10;
+                points.Add(new Vector2(v.X, v.Y));
+                Vector2.Transform(v, Matrix.CreateRotationX(MathHelper.PiOver2));
+                points.Add(new Vector2(v.X, v.Y));
+                Vector2.Transform(v, Matrix.CreateRotationX(MathHelper.Pi));
+                points.Add(new Vector2(v.X, v.Y));
+                
             }
             boundaries = Boundaries.CreateFromPoints(points);
             this.faction = faction;
@@ -59,7 +64,7 @@ namespace Minifice.GameManagement.Shooting
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float layerDepth = position.Y / (GameMap.TileShift.Y / 2) * 0.001f + 0.001f;
+            float layerDepth = position.Y / (GameMap.TileShift.Y / 2) * 0.001f;
             spriteBatch.Draw(bullet, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, layerDepth);
         }
 
