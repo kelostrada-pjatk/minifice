@@ -75,7 +75,7 @@ namespace Minifice.GameManagement
                 for (int j = 0; j < height; j++)
                 {
                     if (mapTiles[i][j] != null)
-                        mapTiles[i][j].Load(content);
+                        mapTiles[i][j].Load(content, i, j);
                 }
             }
         }

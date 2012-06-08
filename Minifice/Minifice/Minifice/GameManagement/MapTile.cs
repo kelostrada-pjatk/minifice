@@ -34,12 +34,12 @@ namespace Minifice.GameManagement
 
         #region Metody Publiczne
 
-        internal void Load(ContentManager content)
+        internal void Load(ContentManager content, int i, int j)
         {
             if (backgroundSprite != null)
                 backgroundSprite.Load(content);
             foreach (MapObject mo in mapObjects)
-                mo.Load(content);
+                mo.Load(content, i, j);
         }
 
         #endregion
