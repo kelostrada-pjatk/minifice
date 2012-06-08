@@ -87,7 +87,7 @@ namespace Minifice.GameManagement
                 for (int j = 0; j < height; j++)
                 {
                     float x = i * TileShift.X + ((j % 2 == 1) ? TileShift.X / 2 : 0);
-                    float y = j * ((float)Math.Ceiling(TileShift.Y/2));
+                    float y = j * TileShift.Y/2;
                     mapTiles[i][j].Draw(spriteBatch, new Vector2(x,y));
                 }
             }

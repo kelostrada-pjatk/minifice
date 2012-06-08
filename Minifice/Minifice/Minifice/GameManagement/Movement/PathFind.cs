@@ -117,8 +117,8 @@ namespace Minifice.GameManagement.Movement
 
         private bool Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
-            int i = (int)unit.GetMapPosition(gameMap).X;
-            int j = (int)unit.GetMapPosition(gameMap).Y;
+            int i = unit.position.GetMapPosition(gameMap).X;
+            int j = unit.position.GetMapPosition(gameMap).Y;
 
             bool intersects = false;
 
