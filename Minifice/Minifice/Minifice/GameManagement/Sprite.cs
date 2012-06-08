@@ -68,7 +68,7 @@ namespace Minifice.GameManagement
 
         #region Metody Publiczne
 
-        public void Load(ContentManager content)
+        public virtual void Load(ContentManager content)
         {
             texture = content.Load<Texture2D>(textureName);
         }

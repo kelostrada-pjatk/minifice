@@ -102,10 +102,10 @@ namespace Minifice.GameManagement
 
             List<Vector2> points = new List<Vector2>();
 
-            points.Add(new Vector2(-7, 0));
-            points.Add(new Vector2(0, -7));
-            points.Add(new Vector2(7, 0));
-            points.Add(new Vector2(0, 7));
+            points.Add(new Vector2(-BoundariesSize, 0));
+            points.Add(new Vector2(0, -BoundariesSize));
+            points.Add(new Vector2(BoundariesSize, 0));
+            points.Add(new Vector2(0, BoundariesSize));
 
             this.boundaries = Boundaries.CreateFromPoints(points);
             

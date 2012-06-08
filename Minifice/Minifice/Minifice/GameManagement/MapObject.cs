@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework.Content;
 
 namespace Minifice.GameManagement
 {
@@ -25,6 +26,11 @@ namespace Minifice.GameManagement
 
         }
 
+        public void Load(ContentManager content, int i, int j)
+        {
+            base.Load(content);
+            //boundaries += new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2);
+        }
 
         public override void Draw(SpriteBatch spriteBatch, Vector2 location, float layerDepth)
         {

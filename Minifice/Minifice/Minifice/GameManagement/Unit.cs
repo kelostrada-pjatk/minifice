@@ -27,6 +27,7 @@ namespace Minifice.GameManagement
         protected GameTime currentTime;
         protected TimeSpan timeLastMoved = new TimeSpan(0);
         public static float shotFrequency = 0.7f;
+        public static float BoundariesSize = 7;
         protected readonly Camera2d camera;
         protected int health;
         public bool isDying = false;
