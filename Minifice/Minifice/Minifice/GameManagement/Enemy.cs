@@ -105,7 +105,7 @@ namespace Minifice.GameManagement
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            animation.Draw(spriteBatch, position, position.Y / (GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
+            animation.Draw(spriteBatch, position, position.Y * 0.00001f + 0.00001f);
         }
 
         public void Notice(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
@@ -133,7 +133,7 @@ namespace Minifice.GameManagement
                     j = (int)current.GetMapPosition(gameMap).Y;
 
                     foreach (var mo in gameMap[i,j].mapObjects)
-                        if ((mo.boundaries + new Vector2(i * GameMap.TileShift.X, j * GameMap.TileShift.Y / 2)).Intersects(boundaries + current))
+                        if (mo.boundaries.Intersects(boundaries + current))
                             intersects = true;
 
                     if (intersects)

@@ -179,8 +179,7 @@ namespace Minifice.GameManagement
             mo.type = new Bonus();
             mo.viewBlocking = true;
             mo.origin = new Vector2(0, 24);
-            mo.Load(content);
-            
+
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 40; j++)
@@ -189,16 +188,25 @@ namespace Minifice.GameManagement
                     GameMap[i + j / 2 + 1, 40 - 2 * i + j] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 291, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
                 }
             }
-
+            /*
             for (int i = 0; i < 42; i++)
             {
                 GameMap[i / 2, 42 - i].mapObjects.Add(mo);
                 GameMap[i / 2 + 20, 82 - i].mapObjects.Add(mo);
             }
-            
-            GameMap[0, 43].mapObjects.Add(mo);
-            GameMap[1, 44].mapObjects.Add(mo);
-
+            */
+            GameMap[20, 43].mapObjects.Add(mo);
+            mo = new MapObject();
+            mo.boundaries = Boundaries.CreateFromPoints(punkty);
+            mo.collectible = false;
+            mo.Source = new Source(539, 0, 48, 47);
+            mo.textureName = @"Game\newtile";
+            mo.throwableOver = true;
+            mo.type = new Bonus();
+            mo.viewBlocking = true;
+            mo.origin = new Vector2(0, 24);
+            GameMap[21, 44].mapObjects.Add(mo);
+            /*
             GameMap[20, 30].mapObjects.Add(mo);
 
             GameMap[4, 60] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
@@ -217,7 +225,7 @@ namespace Minifice.GameManagement
             GameMap[13, 2] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
             GameMap[13, 3] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
 
-
+            */
             GameMap.Load(content);
             
             /*

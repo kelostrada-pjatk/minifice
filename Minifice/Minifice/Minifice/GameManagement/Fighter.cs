@@ -149,7 +149,7 @@ namespace Minifice.GameManagement
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            animation.Draw(spriteBatch, position, position.Y /(GameMap.TileShift.Y / 2) * 0.001f + 0.001f);
+            animation.Draw(spriteBatch, position, position.Y * 0.00001f + 0.00001f);
         }
 
         public override void Die(List<Fighter> fighters)

@@ -64,7 +64,7 @@ namespace Minifice.GameManagement.Shooting
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            float layerDepth = position.Y / (GameMap.TileShift.Y / 2) * 0.001f;
+            float layerDepth = position.Y * 0.00001f + 0.00001f;
             spriteBatch.Draw(bullet, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, layerDepth);
         }
 
