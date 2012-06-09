@@ -59,11 +59,11 @@ namespace Minifice.GameManagement.Shooting
                         {
                             if ((j + l) % 2 == 0)
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X, (j + l) * GameMap.TileShift.Y / 2)).Intersects(boundaries + position)) return mo;
+                                if (mo.boundaries.Intersects(boundaries + position)) return mo;
                             }
                             else
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X + GameMap.TileShift.X / 2, (j + l) * GameMap.TileShift.Y / 2)).Intersects(boundaries + position)) return mo;
+                                if (mo.boundaries.Intersects(boundaries + position)) return mo;
                             }
                         }
                     }

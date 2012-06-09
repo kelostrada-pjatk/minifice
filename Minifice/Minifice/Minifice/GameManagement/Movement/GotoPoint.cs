@@ -131,11 +131,11 @@ namespace Minifice.GameManagement.Movement
                         {
                             if ((j + l) % 2 == 0)
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) return true;
+                                if (mo.boundaries.Intersects(unit.boundaries + unit.position)) return true;
                             }
                             else
                             {
-                                if ((mo.boundaries + new Vector2((i + k) * GameMap.TileShift.X + GameMap.TileShift.X / 2, (j + l) * GameMap.TileShift.Y / 2)).Intersects(unit.boundaries + unit.position)) return true;
+                                if (mo.boundaries.Intersects(unit.boundaries + unit.position)) return true;
                             }
                         }
                     }
