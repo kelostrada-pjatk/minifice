@@ -154,6 +154,8 @@ namespace Minifice.GameManagement
 
             Enemies.Add(A);
 
+            Vector2 v;
+            GameMap.CreateAdvancedGraph(Fighters, Enemies, new Vector2(100, 140), new Vector2(120, 130), out v);
         }
 
         private void Level1()
@@ -199,6 +201,7 @@ namespace Minifice.GameManagement
             GameMap[21, 44].mapObjects.Add(mo.Clone());
 
             GameMap[20, 30].mapObjects.Add(mo.Clone());
+            GameMap[1, 11].mapObjects.Add(mo.Clone());
 
             GameMap[4, 60] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
             GameMap[4, 60].mapObjects.Add(mo.Clone());

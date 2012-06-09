@@ -22,10 +22,10 @@ namespace Minifice.GameManagement.Movement
 
             // W którym miejscu na ekranie zaczyna się i kończy graf
             startGraph = new Vector2(Math.Min(startPoint.X, endPoint.X) - VerticesDensity * tileDensity.X, Math.Min(startPoint.Y, endPoint.Y) - VerticesDensity * tileDensity.Y);
-            Vector2 endGraph = new Vector2(Math.Max(startPoint.X, endPoint.X) - VerticesDensity * tileDensity.X, Math.Max(startPoint.Y, endPoint.Y) - VerticesDensity * tileDensity.Y);
+            Vector2 endGraph = new Vector2(Math.Max(startPoint.X, endPoint.X) + VerticesDensity * tileDensity.X, Math.Max(startPoint.Y, endPoint.Y) + VerticesDensity * tileDensity.Y);
 
             // Rozmiar grafu
-            Vector2 size = new Vector2((endGraph.X - startGraph.X) / VerticesDensity + 1, (endGraph.Y - startGraph.Y) / VerticesDensity + 1);
+            Point size = new Point((int)((endGraph.X - startGraph.X) / VerticesDensity + 1), (int)((endGraph.Y - startGraph.Y) / VerticesDensity + 1));
 
             IGraph g = new AdjacencyMatrixGraph(false, (int)(size.X*size.Y));
 
@@ -130,10 +130,87 @@ namespace Minifice.GameManagement.Movement
                 {
                     Vector2 mapPosition = new Vector2(startGraph.X + i * VerticesDensity, startGraph.Y + j * VerticesDensity);
                     bool intersects = false;
-                    //if ((b[0]+mapPosition).Intersects(
+                    
+                    // TODO: poprawić na współrzędne mapy bo jest bzdura
+                    foreach (var mo in gameMap[i - 1, j - 1].mapObjects)
+                        if ((b[0] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i , j].mapObjects)
+                        if ((b[0] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i - 1 + (j - 1) * (size.X - 1), i + j * (size.X - 1));
+                    else
+                        g.DelEdge(i - 1 + (j - 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i, j - 1].mapObjects)
+                        if ((b[1] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[1] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i + (j - 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i + 1, j - 1].mapObjects)
+                        if ((b[2] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[2] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i + 1 + (j - 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i + 1, j].mapObjects)
+                        if ((b[3] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[3] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i + 1 + j * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i + 1, j + 1].mapObjects)
+                        if ((b[4] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[4] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i + 1 + (j + 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i, j + 1].mapObjects)
+                        if ((b[5] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[5] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i + (j + 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i - 1, j + 1].mapObjects)
+                        if ((b[6] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[6] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i - 1 + (j + 1) * (size.X - 1), i + j * (size.X - 1));
+
+                    intersects = false;
+                    foreach (var mo in gameMap[i - 1, j].mapObjects)
+                        if ((b[7] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    foreach (var mo in gameMap[i, j].mapObjects)
+                        if ((b[7] + mapPosition).Intersects(mo.boundaries)) intersects = true;
+                    if (!intersects)
+                        g.AddEdge(i - 1 + j * (size.X - 1), i + j * (size.X - 1));
                 }
             }
 
+            return g;
+        }
+
+        public static IGraph CreateSimpleGraph(this GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Vector2 start, Vector2 end)
+        {
+            Point p1 = start.GetMapPosition(gameMap);
+            Point p2 = start.GetMapPosition(gameMap);
+            IGraph g;
+            if ((Math.Abs(p1.X - p2.X) + 4) * (Math.Abs(p1.Y - p2.Y) + 4) < 100)
+                g = new AdjacencyListsGraph(false, (Math.Abs(p1.X - p2.X) + 4) * (Math.Abs(p1.Y - p2.Y) + 4));
+            else
+                g = new AdjacencyListsGraph(false, 100); // TODO do poprawy
 
             /*
             Point sourceMap = source.GetMapPosition(gameMap);
@@ -153,19 +230,6 @@ namespace Minifice.GameManagement.Movement
                 }
             }
             */
-
-            return g;
-        }
-
-        public static IGraph CreateSimpleGraph(this GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies, Vector2 start, Vector2 end)
-        {
-            Point p1 = start.GetMapPosition(gameMap);
-            Point p2 = start.GetMapPosition(gameMap);
-            IGraph g;
-            if ((Math.Abs(p1.X - p2.X) + 4) * (Math.Abs(p1.Y - p2.Y) + 4) < 100)
-                g = new AdjacencyListsGraph(false, (Math.Abs(p1.X - p2.X) + 4) * (Math.Abs(p1.Y - p2.Y) + 4));
-            else
-                g = new AdjacencyListsGraph(false, 100); // TODO do poprawy
 
             return g;
         }
