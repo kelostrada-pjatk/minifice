@@ -144,6 +144,26 @@ namespace Minifice.GameManagement
             return boundaries;
         }
 
+
+        internal Boundaries Clone()
+        {
+            Boundaries b = new Boundaries();
+
+            foreach (Vector2 p in points)
+            {
+                b.points.Add(new Vector2(p.X, p.Y));
+            }
+
+            foreach (Function f in functions)
+            {
+                b.functions.Add(new Function(f.a, f.b, f.p1, f.p2));
+            }
+
+            b.Min = new Vector2(Min.X, Min.Y);
+            b.Max = new Vector2(Max.X, Max.Y);
+
+            return b;
+        }
     }
 
     public class Function

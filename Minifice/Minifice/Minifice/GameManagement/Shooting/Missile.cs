@@ -75,8 +75,8 @@ namespace Minifice.GameManagement.Shooting
             Boundaries b;
             List<Vector2> points = new List<Vector2>();
 
-            points.Add(new Vector2(-5, -45));
-            points.Add(new Vector2(5, -45));
+            points.Add(new Vector2(-5, -25));
+            points.Add(new Vector2(5, -25));
             points.Add(new Vector2(5, 0));
             points.Add(new Vector2(-5, 0));
 
@@ -86,7 +86,7 @@ namespace Minifice.GameManagement.Shooting
                 foreach (Fighter f in fighters)
                 {
                     //if ((boundaries + position).Intersects(f.boundaries + f.position + new Vector2(0, -15)))
-                    if ((boundaries + position).Intersects(b + f.position))
+                    if (f.IsAlive && (boundaries + position).Intersects(b + f.position))
                         return f;
                 }
 
@@ -94,7 +94,7 @@ namespace Minifice.GameManagement.Shooting
                 foreach (Enemy e in enemies)
                 {
                     //if ((boundaries + position).Intersects(e.boundaries + e.position + new Vector2(0,-15)))
-                    if ((boundaries + position).Intersects(b + e.position))
+                    if (e.IsAlive && (boundaries + position).Intersects(b + e.position))
                         return e;
                 }
 

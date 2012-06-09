@@ -138,19 +138,19 @@ namespace Minifice.GameManagement
 
             Enemy A = new Enemy(new Vector2(30f, 43f), camera);
             A.Load(content);
-            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(230f, 220f), new Vector2(470f, 280f), 1.4f);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(100f, 50f), new Vector2(170f, 80f), 1.4f);
 
             Enemies.Add(A);
 
             A = new Enemy(new Vector2(40f, 23f), camera);
             A.Load(content);
-            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(330f, 320f), new Vector2(570f, 380f), 1.7f);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(30f, 120f), new Vector2(170f, 80f), 1.7f);
 
             Enemies.Add(A);
 
             A = new Enemy(new Vector2(40f, 55f), camera);
             A.Load(content);
-            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(400f, 220f), new Vector2(100f, 500f), 2.3f);
+            A.moveStrategy = new Patrol(GameMap, Fighters, Enemies, A, new Vector2(40f, 20f), new Vector2(100f, 10f), 2.3f);
 
             Enemies.Add(A);
 
@@ -188,29 +188,20 @@ namespace Minifice.GameManagement
                     GameMap[i + j / 2 + 1, 40 - 2 * i + j] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 291, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
                 }
             }
-            /*
+            
             for (int i = 0; i < 42; i++)
             {
-                GameMap[i / 2, 42 - i].mapObjects.Add(mo);
-                GameMap[i / 2 + 20, 82 - i].mapObjects.Add(mo);
+                GameMap[i / 2, 42 - i].mapObjects.Add(mo.Clone());
+                GameMap[i / 2 + 20, 82 - i].mapObjects.Add(mo.Clone());
             }
-            */
-            GameMap[20, 43].mapObjects.Add(mo);
-            mo = new MapObject();
-            mo.boundaries = Boundaries.CreateFromPoints(punkty);
-            mo.collectible = false;
-            mo.Source = new Source(539, 0, 48, 47);
-            mo.textureName = @"Game\newtile";
-            mo.throwableOver = true;
-            mo.type = new Bonus();
-            mo.viewBlocking = true;
-            mo.origin = new Vector2(0, 24);
-            GameMap[21, 44].mapObjects.Add(mo);
-            /*
-            GameMap[20, 30].mapObjects.Add(mo);
+            
+            GameMap[20, 43].mapObjects.Add(mo.Clone());
+            GameMap[21, 44].mapObjects.Add(mo.Clone());
+
+            GameMap[20, 30].mapObjects.Add(mo.Clone());
 
             GameMap[4, 60] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
-            GameMap[4, 60].mapObjects.Add(mo);
+            GameMap[4, 60].mapObjects.Add(mo.Clone());
             
             for (int i = 0; i < 70; i++)
             {
@@ -225,7 +216,7 @@ namespace Minifice.GameManagement
             GameMap[13, 2] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
             GameMap[13, 3] = new MapTile(new BackgroundSprite(@"Game\fire1", new Rectangle(6, 267, (int)GameMap.TileShift.X, (int)GameMap.TileShift.Y)), new List<MapObject>());
 
-            */
+            
             GameMap.Load(content);
             
             /*
