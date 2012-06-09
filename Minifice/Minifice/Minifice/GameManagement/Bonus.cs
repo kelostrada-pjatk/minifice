@@ -7,5 +7,10 @@ namespace Minifice.GameManagement
 {
     public class Bonus
     {
+        internal Bonus Clone()
+        {
+            // TODO: poprawić
+            return new Bonus();
+        }
     }
 }

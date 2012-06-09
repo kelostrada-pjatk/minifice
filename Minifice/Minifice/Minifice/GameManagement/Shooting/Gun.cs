@@ -47,9 +47,9 @@ namespace Minifice.GameManagement.Shooting
                 v *= 10;
                 points.Add(new Vector2(v.X, v.Y));
                 Vector2.Transform(v, Matrix.CreateRotationX(MathHelper.PiOver2));
-                points.Add(new Vector2(v.X, v.Y));
+                //points.Add(new Vector2(v.X, v.Y));
                 Vector2.Transform(v, Matrix.CreateRotationX(MathHelper.Pi));
-                points.Add(new Vector2(v.X, v.Y));
+                //points.Add(new Vector2(v.X, v.Y));
                 
             }
             boundaries = Boundaries.CreateFromPoints(points);

@@ -91,6 +91,8 @@ namespace Minifice.GameManagement.Movement
             return unit.position;
         }
 
+
+        // Patrol sprawdza kolizje tylko z graczem
         private bool Collision(GameMap gameMap, List<Fighter> fighters, List<Enemy> enemies)
         {
             int i = unit.position.GetMapPosition(gameMap).X;
