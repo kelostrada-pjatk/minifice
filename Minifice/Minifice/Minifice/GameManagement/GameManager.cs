@@ -154,8 +154,6 @@ namespace Minifice.GameManagement
 
             Enemies.Add(A);
 
-            Vector2 v;
-            GameMap.CreateAdvancedGraph(Fighters, Enemies, new Vector2(100, 140), new Vector2(120, 130), out v);
         }
 
         private void Level1()
