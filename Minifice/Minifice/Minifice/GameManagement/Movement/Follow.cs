@@ -11,6 +11,7 @@ namespace Minifice.GameManagement.Movement
     public class Follow : MoveStrategy
     {
         public Unit destination;
+        
 
         public Follow()
             : base()
@@ -25,6 +26,24 @@ namespace Minifice.GameManagement.Movement
         }
 
         public override Vector2? Move(GameTime gameTime)
+        {
+            if (OldMove(gameTime) == null)
+            {
+                Vector2 startGraph;
+                int start, end;
+                IGraph g = gameMap.CreateAdvancedGraph(fighters, enemies, unit.position, destination.position, out startGraph, out start, out end);
+                Edge[] a;
+
+                g.AStar(start, end, out a);
+                
+
+                return null;
+            }
+            else
+                return unit.position;
+        }
+
+        public Vector2? OldMove(GameTime gameTime)
         {
             float s = unit.speed * (gameTime.ElapsedGameTime.Ticks) * 0.00001f;
 
